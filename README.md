@@ -1,1 +1,1 @@
-# MalithDN-Inventory-Management-System-For-University-Faculty
+# Inventory-Management-System-For-University-Faculty
