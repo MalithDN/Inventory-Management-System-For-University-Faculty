@@ -48,11 +48,25 @@ export const addProductFormElements = [
     placeholder: "Enter Inventory Name",
   },
   {
-    label: "Index",
-    name: "index",
+    label: "Device",
+    name: "device",
+    componentType: "select",
+    options: [
+      { id: "Computer", label: "Computer" },
+      { id: "Server", label: "Server" },
+      { id: "Printer", label: "Printer" },
+      { id: "Projector", label: "Projecter" },
+      { id: "Router", label: "Router" },
+      { id: "Camera", label: "Camera" },
+    ],
+  },
+
+  {
+    label: "ID",
+    name: "did",
     componentType: "input",
     type: "number",
-    placeholder: "Enter index number",
+    placeholder: "Enter Device ID",
   },
   {
     label: "Description",
@@ -72,23 +86,11 @@ export const addProductFormElements = [
       
     ],
   },
-  {
-    label: "Category",
-    name: "category",
-    componentType: "select",
-    options: [
-      { id: "Computer", label: "Computer" },
-      { id: "Server", label: "Server" },
-      { id: "Printer", label: "Printer" },
-      { id: "Projector", label: "Projecter" },
-      { id: "Router", label: "Router" },
-      { id: "Camera", label: "Camera" },
-    ],
-  },
+  
   
   {
-    label: "Location",
-    name: "location",
+    label: "Hall Type",
+    name: "halltype",
     componentType: "select",
     options: [
       { id: "Laboratory", label: "Laboratory" },
@@ -99,8 +101,8 @@ export const addProductFormElements = [
     ],
   },
   {
-    label: "Floor",
-    name: "floor",
+    label: "Hall ID",
+    name: "hallid",
     componentType: "select",
     options: [
       { id: "Ground", label: "Ground" },

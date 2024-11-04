@@ -15,17 +15,18 @@ function ShoppingProductTile({
           {/*
           <h2 className="mb-2 text-xl font-bold">{product?.title}</h2>
           */}
-          <div className="flex items-center justify-between mb-2">
+          <div className="  mb-2">
             <span className="text-[16px] text-muted-foreground">
-              Category: {categoryOptionsMap[product?.category]}
-            </span>
+              ID: {product?.did}
+            </span><br/><br/>
             <span className="text-[16px] text-muted-foreground">
-              Department: {departmentOptionsMap[product?.department]}
-            </span>
-          </div>
-          <span className="text-[16px] text-muted-foreground">
-              In {product?.location}.
+              Title: {product?.title}
+            </span><br/><br/>
+            <span className="text-[16px] text-muted-foreground">
+              Hall ID: {product?.hallid}
           </span>
+          </div>
+          
         </CardContent>
       </div>
     </Card>

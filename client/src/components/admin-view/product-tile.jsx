@@ -13,9 +13,9 @@ function AdminProductTile({
       <div>
         
         <CardContent>
-          <h2 className="mt-2 mb-2 text-xl font-bold">Index: {product?.index}</h2>
-          <h2 className="mt-2 mb-2 text-xl font-bold">Category: {product?.category}</h2>
-          <h2 className="mt-2 mb-2 text-xl font-bold">Department: {product?.department}</h2>
+        <h2 className="mt-2 mb-2 text-xl font-bold">Title: {product?.title}</h2>
+          <h2 className="mt-2 mb-2 text-xl font-bold">ID: {product?.did}</h2>
+          <h2 className="mt-2 mb-2 text-xl font-bold">Device: {product?.device}</h2>
           <div className="flex items-center justify-between mb-2">
             
           </div>

@@ -43,37 +43,23 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 sm:p-8 lg:p-10 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
         <div className="relative p-6 bg-black border border-gray-200 rounded-lg shadow-md">
-          <h1 className="mb-3 text-2xl font-bold">Index: {productDetails?.index || "N/A"}</h1>
-          <h3 className="mb-2 text-xl font-semibold text-muted">Category: {productDetails?.category || "Unspecified"}</h3> 
-          <h4 className="mb-2 text-xl font-semibold text-muted">Location: {productDetails?.location || "Unspecified"}</h4>  
-          <h5 className="mb-2 text-xl font-semibold text-muted">In: {productDetails?.floor || "Unknown"} Floor</h5>    
-          <h6 className="mb-2 text-xl font-semibold text-muted">Condition: {productDetails?.condition || "Not available"}</h6>   
-          <h6 className="mb-2 text-xl font-semibold text-muted">Repair Date: {productDetails?.repairdate || "No date provided"}</h6>
+          <h1 className="mb-2 text-xl font-semibold text-muted">ID: {productDetails?.did || "N/A"}</h1>
+          <h2 className="mb-2 text-xl font-semibold text-muted">Device: {productDetails?.device || "Unspecified"}</h2> 
+          <h2 className="mb-2 text-xl font-semibold text-muted">Hall Type: {productDetails?.halltype || "Unspecified"}</h2>  
+          <h2 className="mb-2 text-xl font-semibold text-muted">Hall ID: {productDetails?.hallid || "Unknown"}</h2>    
+          <h2 className="mb-2 text-xl font-semibold text-muted">Condition: {productDetails?.condition || "Not available"}</h2>   
+          <h2 className="mb-2 text-xl font-semibold text-muted">Repair Date: {productDetails?.repairdate || "No date provided"}</h2>
         </div>
 
         <div className="relative p-6 bg-white border border-gray-200 rounded-lg shadow-md">
           <div className="mb-4">
+            <h4 className="text-2xl font-bold text-gray-600">{productDetails?.title}</h4>
+            <Separator className="my-4" />
             <p className="text-lg text-gray-600">Description:</p>
             <p className="mt-2 text-base text-gray-700">{productDetails?.description || "No description available."}</p>
           </div>
-          <Separator className="my-4" />
-          <div className="flex flex-col gap-4">
-            <Label className="text-sm font-semibold text-gray-600">Report Problem Here</Label>
-            <Input
-              name="reviewMsg"
-              value={reviewMsg}
-              onChange={(event) => setReviewMsg(event.target.value)}
-              placeholder="Describe the problem..."
-              className="p-2 border-gray-300 rounded-md"
-            />
-            <Button
-              onClick={handleAddReview}
-              disabled={reviewMsg.trim() === ""}
-              className="self-start mt-2"
-            >
-              Submit
-            </Button>
-          </div>
+          
+
         </div>
       </DialogContent>
     </Dialog>
