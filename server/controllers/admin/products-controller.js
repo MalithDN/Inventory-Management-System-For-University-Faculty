@@ -28,10 +28,10 @@ const addProduct = async (req, res) => {
       title,
       description,
       department,
-      category,
-      index,
-      location,
-      floor,
+      device,
+      did,
+      halltype,
+      hallid,
       condition,
       Repairdate,
     } = req.body;
@@ -42,10 +42,10 @@ const addProduct = async (req, res) => {
       title,
       description,
       department,
-      category,
-      index,
-      location,
-      floor,
+      device,
+      did,
+      halltype,
+      hallid,
       condition,
       Repairdate,
     });
@@ -91,10 +91,10 @@ const editProduct = async (req, res) => {
       title,
       description,
       department,
-      category,
-      index,
-      location,
-      floor,
+      device,
+      did,
+      halltype,
+      hallid,
       condition,
       Repairdate,
     } = req.body;
@@ -108,11 +108,11 @@ const editProduct = async (req, res) => {
 
     findProduct.title = title || findProduct.title;
     findProduct.description = description || findProduct.description;
-    findProduct.category = category || findProduct.category;
+    findProduct.device = device || findProduct.device;
     findProduct.department = department || findProduct.department;
-    findProduct.index = index  || findProduct.index;
-    findProduct.location = location  || findProduct.location
-    findProduct.floor = floor || findProduct.floor;
+    findProduct.did = did  || findProduct.did;
+    findProduct.hallid = hallid  || findProduct.hallid
+    findProduct.halltype = halltype || findProduct.halltype;
     findProduct.image = image || findProduct.image;
     findProduct.condition = condition || findProduct.condition;
     findProduct.Repairdate = Repairdate || findProduct.Repairdate;
