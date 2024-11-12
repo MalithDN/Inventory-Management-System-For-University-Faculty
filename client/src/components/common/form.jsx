@@ -39,7 +39,6 @@ function CommonForm({
             }
           />
         );
-
         break;
       case "select":
         element = (
@@ -66,7 +65,6 @@ function CommonForm({
             </SelectContent>
           </Select>
         );
-
         break;
       case "textarea":
         element = (
@@ -83,9 +81,7 @@ function CommonForm({
             }
           />
         );
-
         break;
-
       default:
         element = (
           <Input
@@ -110,15 +106,15 @@ function CommonForm({
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6 mt-6"> {/* Increase gap here */}
         {formControls.map((controlItem) => (
-          <div className="grid w-full gap-1.5" key={controlItem.name}>
+          <div className="grid w-full gap-6" key={controlItem.name}> {/* Increase gap in each control */}
             <Label className="mb-1">{controlItem.label}</Label>
             {renderInputsByComponentType(controlItem)}
           </div>
         ))}
       </div>
-      <Button disabled={isBtnDisabled} type="submit" className="mt-2 w-full">
+      <Button disabled={isBtnDisabled} type="submit" className="mt-6 w-full bg-purple-700 rounded-full"> {/* Increase margin-top */}
         {buttonText || "Submit"}
       </Button>
     </form>
