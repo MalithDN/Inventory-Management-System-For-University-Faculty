@@ -22,6 +22,8 @@ function CommonForm({
     let element = null;
     const value = formData[getControlItem.name] || "";
 
+    const inputStyles = "outline outline-1 outline-purple-500";
+
     switch (getControlItem.componentType) {
       case "input":
         element = (
@@ -37,6 +39,7 @@ function CommonForm({
                 [getControlItem.name]: event.target.value,
               })
             }
+            className={inputStyles} // Apply the purple outline styles
           />
         );
         break;
@@ -51,7 +54,7 @@ function CommonForm({
             }
             value={value}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className={`w-full ${inputStyles}`}>
               <SelectValue placeholder={getControlItem.label} />
             </SelectTrigger>
             <SelectContent>
@@ -79,6 +82,7 @@ function CommonForm({
                 [getControlItem.name]: event.target.value,
               })
             }
+            className={inputStyles} // Apply the purple outline styles
           />
         );
         break;
@@ -96,6 +100,7 @@ function CommonForm({
                 [getControlItem.name]: event.target.value,
               })
             }
+            className={inputStyles} // Apply the purple outline styles
           />
         );
         break;
@@ -114,7 +119,7 @@ function CommonForm({
           </div>
         ))}
       </div>
-      <Button disabled={isBtnDisabled} type="submit" className="mt-6 w-full bg-purple-700 rounded-full"> {/* Increase margin-top */}
+      <Button disabled={isBtnDisabled} type="submit" className="mt-6 w-full bg-purple-700 rounded-full hover:bg-purple-900 transition-colors duration-400"> {/* Increase margin-top */}
         {buttonText || "Submit"}
       </Button>
     </form>
