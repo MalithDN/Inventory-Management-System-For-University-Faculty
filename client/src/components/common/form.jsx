@@ -22,7 +22,7 @@ function CommonForm({
     let element = null;
     const value = formData[getControlItem.name] || "";
 
-    const inputStyles = "outline outline-1 outline-purple-500";
+    const inputStyles = "outline outline-1 outline-purple-500 hover:transition-all duration-500 hover:scale-105";
 
     switch (getControlItem.componentType) {
       case "input":
@@ -114,12 +114,12 @@ function CommonForm({
       <div className="flex flex-col gap-6 mt-6"> {/* Increase gap here */}
         {formControls.map((controlItem) => (
           <div className="grid w-full gap-6" key={controlItem.name}> {/* Increase gap in each control */}
-            <Label className="mb-1">{controlItem.label}</Label>
+            <Label className="">{controlItem.label}</Label>
             {renderInputsByComponentType(controlItem)}
           </div>
         ))}
       </div>
-      <Button disabled={isBtnDisabled} type="submit" className="mt-6 w-full bg-purple-700 rounded-full hover:bg-purple-900 transition-colors duration-400"> {/* Increase margin-top */}
+      <Button disabled={isBtnDisabled} type="submit" className="mt-6 w-full bg-purple-700 rounded-full hover:bg-purple-900 transition-all duration-500 hover:scale-105"> {/* Increase margin-top */}
         {buttonText || "Submit"}
       </Button>
     </form>
