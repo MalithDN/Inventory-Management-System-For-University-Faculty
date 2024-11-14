@@ -12,7 +12,7 @@ function AuthLayout() {
         }}
       >
         {/* Logo Section */}
-        <div className="absolute top-4 left-4">
+        <div className="absolute top-4 left-4 transition-all duration-500 ease-in-out hover:scale-105">
           <img 
             src="https://tech.cmb.ac.lk/wp-content/uploads/2017/10/technology-logo.png" 
             alt="Logo" 
@@ -24,7 +24,7 @@ function AuthLayout() {
       {/* Right Section with Content */}
       <div className="flex flex-col items-center justify-start flex-1 h-full px-4 py-12 sm:px-6 lg:px-8">
         {/* Centered Heading */}
-        <h1 className="text-center text-4xl lg:text-5xl font-bold mb-8 text-purple-700">
+        <h1 className="text-center text-4xl lg:text-5xl font-bold mb-8 text-purple-700 transition-all duration-500 hover:scale-105">
         <span className="block mb-4">Inventory Management</span> <span>System</span>
         </h1>
         {/* Login Form Section */}

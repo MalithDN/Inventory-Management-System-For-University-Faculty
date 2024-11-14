@@ -40,7 +40,7 @@ function AuthRegister() {
   return (
     <div className="mx-auto w-full max-w-md space-y-6 -mt-16">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground transition-all duration-500 hover:scale-105">
           Create new account
         </h1>
         <p className="mt-2">
