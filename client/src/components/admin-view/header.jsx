@@ -19,7 +19,7 @@ function AdminHeader({ setOpen }) {
       <div className="flex flex-1 justify-end">
         <Button
           onClick={handleLogout}
-          className="inline-flex gap-2 items-center rounded-md px-4 py-2 text-sm font-medium shadow"
+          className="inline-flex gap-2 items-center rounded-md px-4 py-2 text-sm font-medium shadow bg-purple-700 hover:bg-purple-900 transition-all duration-700 hover:scale-105"
         >
           <LogOut />
           Logout

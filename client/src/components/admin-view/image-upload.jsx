@@ -69,7 +69,7 @@ function ProductImageUpload({
     <div
       className={`w-full  mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}
     >
-      <Label className="block mb-2 text-lg font-semibold">Upload Image</Label>
+      <Label className="block mb-2 text-lg font-bold text-purple-700">Upload Image</Label>
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -92,11 +92,12 @@ function ProductImageUpload({
               isEditMode ? "cursor-not-allowed" : ""
             } flex flex-col items-center justify-center h-32 cursor-pointer`}
           >
-            <UploadCloudIcon className="w-10 h-10 mb-2 text-muted-foreground" />
-            <span>Drag & drop or click to upload image</span>
+            <UploadCloudIcon className="w-10 h-10 mb-2 text-muted-foreground transition-all duration-700 hover:scale-125" />
+            <span className="disabled">Drag & drop or click to upload image</span>
+            
           </Label>
         ) : imageLoadingState ? (
-          <Skeleton className="h-10 bg-gray-100" />
+          <Skeleton className="h-10 bg-gray-300" />
         ) : (
           <div className="flex items-center justify-between">
             <div className="flex items-center">
