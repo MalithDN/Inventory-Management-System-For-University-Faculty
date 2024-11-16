@@ -133,15 +133,15 @@ function ShoppingHome() {
 
       <section className="py-12 bg-gray-50">
         <div className="container px-4 mx-auto">
-          <h2 className="mb-8 text-3xl font-bold text-center">Inventory Category</h2>
+          <h2 className="mb-8 text-3xl font-bold text-center text-purple-700">Inventory Category</h2>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
             {categorysWithIcon.map((brandItem) => (
               <Card
                 onClick={() => handleNavigateToListingPage(brandItem, "category")}
-                className="transition-shadow cursor-pointer hover:shadow-lg"
+                className="text-purple-700 transition-shadow cursor-pointer hover:shadow-lg"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
+                  <brandItem.icon className="w-12 h-12 mb-4 text-primary text-purple-700" />
                   <span className="font-bold">{brandItem.label}</span>
                 </CardContent>
               </Card>
@@ -152,7 +152,7 @@ function ShoppingHome() {
 
       <section className="py-12">
         <div className="container px-4 mx-auto">
-          <h2 className="mb-8 text-3xl font-bold text-center">
+          <h2 className="mb-8 text-3xl font-bold text-center text-purple-700">
             Inventory Information
           </h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

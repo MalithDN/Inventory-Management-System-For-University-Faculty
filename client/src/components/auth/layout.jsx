@@ -12,11 +12,11 @@ function AuthLayout() {
         }}
       >
         {/* Logo Section */}
-        <div className="absolute top-4 left-6 transition-all duration-500 ease-in-out hover:scale-105">
+        <div className="absolute top-4 left-6">
           <img 
             src="https://tech.cmb.ac.lk/wp-content/uploads/2017/10/technology-logo.png" 
             alt="Logo" 
-            className="w-1/2 h-auto"
+            className="w-1/2 h-auto transition-all duration-500 ease-in-out hover:scale-105"
           />
         </div>
       </div>

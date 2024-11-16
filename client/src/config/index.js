@@ -152,24 +152,24 @@ export const shoppingViewHeaderMenuItems = [
   },
   {
     id: "iat",
-    label: "support",
+    label: "Support",
     path: "/shop/listing",
   },
-  {
-    id: "et",
-    label: "FOT",
-    path: "/shop/listing",
-  },
-  {
-    id: "at",
-    label: "AT",
-    path: "/shop/listing",
-  },
-  {
-    id: "account",
-    label: "Reports",
-    path: "shop/account",
-  },
+  // {
+  //   id: "et",
+  //   label: "FOT",
+  //   path: "/shop/listing",
+  // },
+  // {
+  //   id: "at",
+  //   label: "AT",
+  //   path: "/shop/listing",
+  // },
+  // {
+  //   id: "account",
+  //   label: "Reports",
+  //   path: "shop/account",
+  // },
   {
     id: "search",
     label: "Search",
