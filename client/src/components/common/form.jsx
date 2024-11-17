@@ -22,7 +22,7 @@ function CommonForm({
     let element = null;
     const value = formData[getControlItem.name] || "";
 
-    const inputStyles = "outline outline-1 outline-purple-500 transition-all duration-500 hover:scale-105";
+    const inputStyles = "outline outline-1 outline-purple-500 max-w-5xl transition-all duration-500 hover:scale-105";
 
     switch (getControlItem.componentType) {
       case "input":
@@ -119,7 +119,7 @@ function CommonForm({
           </div>
         ))}
       </div>
-      <Button disabled={isBtnDisabled} type="submit" className="mt-6 w-full bg-purple-700 rounded-full hover:bg-purple-900 transition-all duration-700 hover:scale-105"> {/* Increase margin-top */}
+      <Button disabled={isBtnDisabled} type="submit" className="mt-6 w-full max-w-5xl bg-purple-700 rounded-full hover:bg-purple-900 transition-all duration-700 hover:scale-105"> {/* Increase margin-top */}
         {buttonText || "Submit"}
       </Button>
     </form>

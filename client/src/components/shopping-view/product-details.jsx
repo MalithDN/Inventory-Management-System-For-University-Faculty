@@ -42,7 +42,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 sm:p-8 lg:p-10 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
-        <div className="relative p-6 bg-black border border-gray-200 rounded-lg shadow-md">
+        <div className="relative p-6 bg-purple-900 border border-gray-200 rounded-lg shadow-xl">
           <h1 className="mb-2 text-xl font-semibold text-muted">ID: {productDetails?.did || "N/A"}</h1>
           <h2 className="mb-2 text-xl font-semibold text-muted">Device: {productDetails?.device || "Unspecified"}</h2> 
           <h2 className="mb-2 text-xl font-semibold text-muted">Hall Type: {productDetails?.halltype || "Unspecified"}</h2>  

@@ -17,10 +17,11 @@ function ShoppingAccount() {
           <Tabs defaultValue="address">
             <TabsList>
               <TabsTrigger value="address">Address</TabsTrigger>
-            </TabsList>
+            </TabsList>  
+            <div className="p-20">        
             <TabsContent value="address">
-              <Address />
-            </TabsContent>
+            <Address />
+            </TabsContent></div> 
           </Tabs>
         </div>
       </div>

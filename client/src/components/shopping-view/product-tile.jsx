@@ -8,22 +8,22 @@ function ShoppingProductTile({
   handleGetProductDetails,
 }) {
   return (
-    <Card className="w-full max-w-sm mx-auto">
+    <Card className="w-full max-w-sm mx-auto transition-all duration-700 hover:scale-105 hover:shadow-lg">
       <div onClick={() => handleGetProductDetails(product?._id)}>
         
-        <CardContent className="p-4">
+        <CardContent className="p-4 ">
           {/*
           <h2 className="mb-2 text-xl font-bold">{product?.title}</h2>
           */}
-          <div className="  mb-2">
+          <div className="  mb-2 ">
             <span className="text-[16px] text-muted-foreground">
-              ID: {product?.did}
+            <span className="font-semibold text-purple-700"> ID: </span>{product?.did}
             </span><br/><br/>
             <span className="text-[16px] text-muted-foreground">
-              Title: {product?.title}
+              <span className="font-semibold text-purple-700">Title: </span>{product?.title}
             </span><br/><br/>
             <span className="text-[16px] text-muted-foreground">
-              Hall ID: {product?.hallid}
+            <span className="font-semibold text-purple-700">Hall ID: </span>{product?.hallid}
           </span>
           </div>
           
