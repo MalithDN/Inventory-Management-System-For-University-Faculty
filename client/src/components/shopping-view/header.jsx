@@ -23,6 +23,7 @@ import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
 import { Label } from "../ui/label";
 
+
 function MenuItems() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,11 +50,11 @@ function MenuItems() {
   }
 
   return (
-    <nav className="flex flex-col gap-6 mb-3 lg:mb-0 lg:items-center lg:flex-row">
+    <nav className="flex flex-col gap-8 mb-3 lg:mb-0 lg:items-center lg:flex-row text-white">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
           onClick={() => handleNavigate(menuItem)}
-          className="text-sm font-medium cursor-pointer"
+          className="text-sm font-medium cursor-pointer transition-all duration-700 hover:scale-110 hover:underline"
           key={menuItem.id}
         >
           {menuItem.label}
@@ -97,21 +98,21 @@ function HeaderRightContent() {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black">
-            <AvatarFallback className="font-extrabold text-white bg-black">
+          <Avatar className="select-none cursor-pointer bg-white transition-all duration-700 hover:scale-105 hover:text-white hover:bg-purple-500">
+            <AvatarFallback className="font-extrabold text-purple-700 bg-white">
               {user?.userName[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" className="w-56">
-          <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
+          <DropdownMenuLabel className="select-none text-purple-700">Logged in as {user?.userName}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")}>
-            <UserCog className="w-4 h-4 mr-2" />
+          <DropdownMenuItem onClick={() => navigate("/shop/account")} className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105">
+            <UserCog className="w-4 h-4 mr-2 " />
             Account
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
+          <DropdownMenuItem onClick={handleLogout} className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:scale-105 hover:bg purple-700">
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </DropdownMenuItem>
@@ -126,10 +127,10 @@ function ShoppingHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="flex items-center justify-between h-16 px-4 md:px-6">
-        <Link to="/shop/home" className="flex items-center gap-2">
-          <HousePlug className="w-6 h-6" />
-          <span className="font-bold">Inventory</span>
+      <div className="flex items-center justify-between h-16 px-4 md:px-6 bg-purple-700">
+        <Link to="/shop/home" className="flex items-center gap-2 transition-all duration-700 hover:scale-105">
+          <HousePlug className="w-8 h-8 text-white" />
+          <span className="font-bold text-white">Inventory Management System</span>
         </Link>
         <Sheet>
           <SheetTrigger asChild>

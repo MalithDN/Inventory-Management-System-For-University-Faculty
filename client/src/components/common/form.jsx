@@ -22,6 +22,8 @@ function CommonForm({
     let element = null;
     const value = formData[getControlItem.name] || "";
 
+    const inputStyles = "outline outline-1 outline-purple-500 max-w-5xl transition-all duration-500 hover:scale-105";
+
     switch (getControlItem.componentType) {
       case "input":
         element = (
@@ -37,9 +39,9 @@ function CommonForm({
                 [getControlItem.name]: event.target.value,
               })
             }
+            className={inputStyles} // Apply the purple outline styles
           />
         );
-
         break;
       case "select":
         element = (
@@ -52,7 +54,7 @@ function CommonForm({
             }
             value={value}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className={`w-full ${inputStyles}`}>
               <SelectValue placeholder={getControlItem.label} />
             </SelectTrigger>
             <SelectContent>
@@ -66,7 +68,6 @@ function CommonForm({
             </SelectContent>
           </Select>
         );
-
         break;
       case "textarea":
         element = (
@@ -81,11 +82,10 @@ function CommonForm({
                 [getControlItem.name]: event.target.value,
               })
             }
+            className={inputStyles} // Apply the purple outline styles
           />
         );
-
         break;
-
       default:
         element = (
           <Input
@@ -100,6 +100,7 @@ function CommonForm({
                 [getControlItem.name]: event.target.value,
               })
             }
+            className={inputStyles} // Apply the purple outline styles
           />
         );
         break;
@@ -110,15 +111,15 @@ function CommonForm({
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6 mt-6"> {/* Increase gap here */}
         {formControls.map((controlItem) => (
-          <div className="grid w-full gap-1.5" key={controlItem.name}>
-            <Label className="mb-1">{controlItem.label}</Label>
+          <div className="grid w-full gap-6" key={controlItem.name}> {/* Increase gap in each control */}
+            <Label className="">{controlItem.label}</Label>
             {renderInputsByComponentType(controlItem)}
           </div>
         ))}
       </div>
-      <Button disabled={isBtnDisabled} type="submit" className="mt-2 w-full">
+      <Button disabled={isBtnDisabled} type="submit" className="mt-6 w-full max-w-5xl bg-purple-700 rounded-full hover:bg-purple-900 transition-all duration-700 hover:scale-105"> {/* Increase margin-top */}
         {buttonText || "Submit"}
       </Button>
     </form>

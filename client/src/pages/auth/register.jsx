@@ -38,15 +38,15 @@ function AuthRegister() {
   console.log(formData);
 
   return (
-    <div className="mx-auto w-full max-w-md space-y-6">
+    <div className="mx-auto w-full max-w-md space-y-6 -mt-16">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
+        <h1 className="inline-block select-none text-3xl font-bold tracking-tight text-foreground transition-all duration-500 hover:scale-105">
           Create new account
         </h1>
-        <p className="mt-2">
-          Already have an account
+        <p className="mt-2 select-none">
+          Already have an account?
           <Link
-            className="font-medium ml-2 text-primary hover:underline"
+            className="font-medium ml-2 text-primary hover:underline text-purple-700"
             to="/auth/login"
           >
             Login
