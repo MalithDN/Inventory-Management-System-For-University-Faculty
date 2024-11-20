@@ -7,7 +7,6 @@ import { useToast } from "../ui/use-toast";
 import { setProductDetails } from "@/store/shop/products-slice";
 import { Label } from "../ui/label";
 import { useEffect, useState } from "react";
-import { addReview } from "@/store/shop/review-slice";
 
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
@@ -21,23 +20,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     setReviewMsg("");
   }
 
-  function handleAddReview() {
-    dispatch(
-      addReview({
-        productId: productDetails?._id,
-        userId: user?.id,
-        userName: user?.userName,
-        reviewMessage: reviewMsg,
-      })
-    ).then((data) => {
-      if (data.payload.success) {
-        setReviewMsg("");
-        toast({
-          title: "Problem reported successfully!",
-        });
-      }
-    });
-  }
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>

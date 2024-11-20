@@ -15,7 +15,7 @@ function ShoppingProductTile({
           {/*
           <h2 className="mb-2 text-xl font-bold">{product?.title}</h2>
           */}
-          <div className="  mb-2">
+          <div className="mb-2 ">
             <span className="text-[16px] text-muted-foreground">
               ID: {product?.did}
             </span><br/><br/>
@@ -25,6 +25,11 @@ function ShoppingProductTile({
             <span className="text-[16px] text-muted-foreground">
               Hall ID: {product?.hallid}
           </span>
+          <span className="text-[16px] text-muted-foreground" style={{ display: 'none' }}>
+               Category: {categoryOptionsMap[product?.device]}
+               Department: {departmentOptionsMap[product?.department]}
+           </span>
+
           </div>
           
         </CardContent>

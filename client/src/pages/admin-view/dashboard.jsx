@@ -23,6 +23,24 @@ function AdminDashboard() {
     });
   }
 
+  async function handleRemoveImage(imageId) {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/admin/products/remove-image/${imageId}`
+      );
+      console.log(response.data, "Response after deletion");
+      if (response.data.success) {
+        dispatch(getFeatureImages()); // Refresh the list after deletion
+      } else {
+        console.error("Failed to remove image:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error removing image:", error);
+    }
+  }
+  
+  
+
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
@@ -39,19 +57,32 @@ function AdminDashboard() {
         setImageLoadingState={setImageLoadingState}
         imageLoadingState={imageLoadingState}
         isCustomStyling={true}
-        // isEditMode={currentEditedId !== null}
       />
-      <Button onClick={handleUploadFeatureImage} className="mt-5 w-full">
+      <Button onClick={handleUploadFeatureImage} className="w-full mt-5">
         Upload
       </Button>
       <div className="flex flex-col gap-4 mt-5">
         {featureImageList && featureImageList.length > 0
           ? featureImageList.map((featureImgItem) => (
-              <div className="relative">
+              <div key={featureImgItem.id} className="relative">
                 <img
                   src={featureImgItem.image}
+                  alt="Uploaded feature"
                   className="w-full h-[300px] object-cover rounded-t-lg"
                 />
+                <div className="absolute flex items-center gap-2 top-2 right-2">
+                <Button
+  variant="destructive"
+  size="sm"
+  onClick={() => {
+    console.log("Removing image with id", featureImgItem.id);
+    handleRemoveImage(featureImgItem.id);
+  }}
+>
+  Remove Image
+</Button>
+
+                </div>
               </div>
             ))
           : null}
