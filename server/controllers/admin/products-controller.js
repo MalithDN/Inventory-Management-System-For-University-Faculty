@@ -111,7 +111,7 @@ const editProduct = async (req, res) => {
     findProduct.device = device || findProduct.device;
     findProduct.department = department || findProduct.department;
     findProduct.did = did  || findProduct.did;
-    findProduct.hallid = hallid  || findProduct.hallid
+    findProduct.hallid = hallid  || findProduct.hallid;
     findProduct.halltype = halltype || findProduct.halltype;
     findProduct.image = image || findProduct.image;
     findProduct.condition = condition || findProduct.condition;
