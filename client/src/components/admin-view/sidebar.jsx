@@ -3,6 +3,8 @@ import {
   LayoutDashboard,
   Bell ,  
   Warehouse ,
+  Users,
+
 } from "lucide-react";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +29,12 @@ const adminSidebarMenuItems = [
     path: "/admin/orders",
     icon: <Bell />,  
   },
+  {
+    id: "users",
+    label: "Users",
+    path: "/admin/users",
+    icon: <Users />,  
+  },
 ];
 
 function MenuItems({ setOpen }) {
@@ -41,7 +49,7 @@ function MenuItems({ setOpen }) {
             navigate(menuItem.path);
             setOpen ? setOpen(false) : null;
           }}
-          className="flex items-center gap-2 px-3 py-2 text-xl rounded-md cursor-pointer text-muted-foreground bg-purple-100 text-purple-700 hover:text-white hover:bg-purple-700 transition-all duration-700 hover:scale-105"
+          className="flex items-center gap-2 px-3 py-2 text-xl text-purple-700 transition-all duration-700 bg-purple-100 rounded-md cursor-pointer text-muted-foreground hover:text-white hover:bg-purple-700 hover:scale-105"
         >
           {menuItem.icon}
           <span>{menuItem.label}</span>
