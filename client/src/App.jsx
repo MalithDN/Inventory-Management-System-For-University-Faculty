@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
 import SearchProducts from "./pages/shopping-view/search";
+import AdminUsers from "./pages/admin-view/users";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -69,6 +70,7 @@ function App() {
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="features" element={<AdminFeatures />} />
+          <Route path="users" element={< AdminUsers/>} />
         </Route>
         <Route
           path="/shop"

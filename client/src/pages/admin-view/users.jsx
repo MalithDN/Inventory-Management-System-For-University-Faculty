@@ -1,11 +1,11 @@
-import AdminOrdersView from "@/components/admin-view/users";
+import AdminUserView from "@/components/admin-view/users";
 
-function AdminOrders() {
+function AdminUsers() {
   return (
     <div>
-      <AdminOrdersView />
+      <AdminUserView />
     </div>
   );
 }
 
-export default AdminOrders;
+export default AdminUsers;
