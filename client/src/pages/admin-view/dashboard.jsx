@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { addFeatureImage, getFeatureImages } from "@/store/common-slice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 function AdminDashboard() {
   const [imageFile, setImageFile] = useState(null);
