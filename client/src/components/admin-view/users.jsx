@@ -10,33 +10,42 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import AdminOrderDetailsView from "./order-details";
+import AdminUserDetailsView from "./user-details"; // Updated to user-details
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllOrdersForAdmin,
-  getOrderDetailsForAdmin,
-  resetOrderDetails,
-} from "@/store/admin/order-slice";
+  getAllUsersForAdmin,
+  getUserDetailsForAdmin,
+  resetUserDetails,
+  deleteUserForAdmin,
+} from "@/store/admin/user-slice"; // Updated to user-slice actions
 import { Badge } from "../ui/badge";
 
-function AdminOrdersView() {
+function AdminUsersView() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { orderList, orderDetails } = useSelector((state) => state.adminOrder);
+  const { userList, userDetails } = useSelector((state) => state.adminUser); // Updated to userList and userDetails
+  console.log("Redux State - userList:", userList);
   const dispatch = useDispatch();
 
-  function handleFetchOrderDetails(getId) {
-    dispatch(getOrderDetailsForAdmin(getId));
+  function handleFetchUserDetails(getId) {
+    dispatch(getUserDetailsForAdmin(getId)); // Fetch user details when clicked
   }
 
+  function handleDeleteUser(userId) {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      dispatch(deleteUserForAdmin(userId));
+    }
+  }
+  
+
   useEffect(() => {
-    dispatch(getAllOrdersForAdmin());
+    dispatch(getAllUsersForAdmin()); // Fetch all users when the component mounts
   }, [dispatch]);
 
-  console.log(orderDetails, "orderList");
+  console.log(userDetails, "userList");
 
   useEffect(() => {
-    if (orderDetails !== null) setOpenDetailsDialog(true);
-  }, [orderDetails]);
+    if (userDetails !== null) setOpenDetailsDialog(true); // Open the dialog when userDetails are available
+  }, [userDetails]);
 
   return (
     <Card>
@@ -57,41 +66,45 @@ function AdminOrdersView() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orderList && orderList.length > 0
-              ? orderList.map((orderItem) => (
-                  <TableRow>
-                    <TableCell>{orderItem?._id}</TableCell>
-                    <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
+            {userList && userList.length > 0
+              ? userList.map((userItem) => (
+                  <TableRow key={userItem?._id}>
+                    <TableCell>{userItem?.userName}</TableCell>
+                    <TableCell>{userItem?.email}</TableCell>
                     <TableCell>
                       <Badge
                         className={`py-1 px-3 ${
-                          orderItem?.orderStatus === "confirmed"
+                          userItem?.role === "admin"
                             ? "bg-green-500"
-                            : orderItem?.orderStatus === "rejected"
-                            ? "bg-red-600"
-                            : "bg-black"
+                            : userItem?.role === "moderator"
+                            ? "bg-blue-500"
+                            : "bg-gray-500"
                         }`}
                       >
-                        {orderItem?.orderStatus}
+                        {userItem?.role}
                       </Badge>
                     </TableCell>
-                    <TableCell>${orderItem?.totalAmount}</TableCell>
                     <TableCell>
                       <Dialog
                         open={openDetailsDialog}
                         onOpenChange={() => {
                           setOpenDetailsDialog(false);
-                          dispatch(resetOrderDetails());
+                          dispatch(resetUserDetails()); // Reset user details on closing
                         }}
                       >
                         <Button
                           onClick={() =>
-                            handleFetchOrderDetails(orderItem?._id)
+                            handleFetchUserDetails(userItem?._id)
                           }
                         >
-                          View Details
+                          Edit Details
                         </Button>
-                        <AdminOrderDetailsView orderDetails={orderDetails} />
+
+                        <Button onClick={() => 
+                          handleDeleteUser(userItem._id)} 
+                          style={{ marginLeft: "10px" }}>Delete
+                          </Button>
+                        <AdminUserDetailsView userDetails={userDetails} />
                       </Dialog>
                     </TableCell>
                   </TableRow>
@@ -104,4 +117,4 @@ function AdminOrdersView() {
   );
 }
 
-export default AdminOrdersView;
+export default AdminUsersView;
