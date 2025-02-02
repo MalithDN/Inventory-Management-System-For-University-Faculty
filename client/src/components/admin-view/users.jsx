@@ -97,7 +97,7 @@ function AdminUsersView() {
                             handleFetchUserDetails(userItem?._id)
                           }
                         >
-                          Edit Details
+                          Edit Role
                         </Button>
 
                         <Button onClick={() => 

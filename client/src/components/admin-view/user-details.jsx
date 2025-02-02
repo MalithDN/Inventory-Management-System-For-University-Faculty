@@ -44,6 +44,7 @@ function AdminUserDetailsView({ userDetails }) {
 
     dispatch(updateUserRole({ id: userDetails._id, role })).then((data) => {
       if (data?.payload?.success) {
+        console.log("success");
         setOpenDetailsDialog(false); // Close dialog after role update
         dispatch(getUserDetailsForAdmin(userDetails._id)); // Re-fetch updated user details
         dispatch(getAllUsersForAdmin()); // Re-fetch all users
@@ -51,6 +52,8 @@ function AdminUserDetailsView({ userDetails }) {
         toast({
           title: data?.payload?.message,
         });
+      }else{
+        console.log("not successful")
       }
     });
   }
@@ -97,9 +100,9 @@ function AdminUserDetailsView({ userDetails }) {
                 name: "role",
                 componentType: "select",
                 options: [
-                  { id: "admin", label: "Admin" },
-                  { id: "user", label: "User" },
-                  { id: "moderator", label: "Moderator" },
+                  { id: "admin", label: "admin" },
+                  { id: "user", label: "user" },
+                  { id: "moderator", label: "moderator" },
                 ],
               },
             ]}
