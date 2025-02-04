@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Dialog } from "../ui/dialog";
+import { DialogContent } from "../ui/dialog"; // Assuming this import is correct
 import {
   Table,
   TableBody,
@@ -10,42 +11,61 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import AdminUserDetailsView from "./user-details"; // Updated to user-details
+import AdminUserDetailsView from "./user-details"; // Ensure proper import path
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllUsersForAdmin,
   getUserDetailsForAdmin,
   resetUserDetails,
   deleteUserForAdmin,
-} from "@/store/admin/user-slice"; // Updated to user-slice actions
+} from "@/store/admin/user-slice";
 import { Badge } from "../ui/badge";
+import { useToast } from "../ui/use-toast";
 
 function AdminUsersView() {
-  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { userList, userDetails } = useSelector((state) => state.adminUser); // Updated to userList and userDetails
-  console.log("Redux State - userList:", userList);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [dialogType, setDialogType] = useState(""); // State to track dialog type
+  const { userList, userDetails } = useSelector((state) => state.adminUser);
   const dispatch = useDispatch();
-
-  function handleFetchUserDetails(getId) {
-    dispatch(getUserDetailsForAdmin(getId)); // Fetch user details when clicked
-  }
-
-  function handleDeleteUser(userId) {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      dispatch(deleteUserForAdmin(userId));
-    }
-  }
-  
+  const { toast } = useToast();
 
   useEffect(() => {
-    dispatch(getAllUsersForAdmin()); // Fetch all users when the component mounts
+    dispatch(getAllUsersForAdmin());
   }, [dispatch]);
 
-  console.log(userDetails, "userList");
+  function handleFetchUserDetails(userId) {
+    setSelectedUserId(userId);
+    setDialogType("edit");
+    dispatch(getUserDetailsForAdmin(userId));
+  }
 
-  useEffect(() => {
-    if (userDetails !== null) setOpenDetailsDialog(true); // Open the dialog when userDetails are available
-  }, [userDetails]);
+  function handleCloseDialog() {
+    setSelectedUserId(null);
+    setDialogType("");
+    dispatch(resetUserDetails());
+  }
+
+  function handleDeleteConfirmation(userId) {
+    setSelectedUserId(userId);
+    setDialogType("delete");
+  }
+
+  function handleDeleteUser() {
+    dispatch(deleteUserForAdmin(selectedUserId))
+      .then((data) => {
+        console.log("User deleted successfully");
+        toast({
+          title: data?.payload?.message,
+        });
+      })
+      .catch(error => {
+        toast({
+          title: data?.payload?.message,
+        });
+        console.error("Failed to delete user:", error);
+      });
+    handleCloseDialog();
+  }
 
   return (
     <Card>
@@ -60,59 +80,53 @@ function AdminUsersView() {
               <TableHead>E-mail</TableHead>
               <TableHead>Role</TableHead>
               <TableHead>Action</TableHead>
-              <TableHead>
-                <span className="sr-only">Details</span>
-              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {userList && userList.length > 0
-              ? userList.map((userItem) => (
-                  <TableRow key={userItem?._id}>
-                    <TableCell>{userItem?.userName}</TableCell>
-                    <TableCell>{userItem?.email}</TableCell>
-                    <TableCell>
-                      <Badge
-                        className={`py-1 px-3 ${
-                          userItem?.role === "admin"
-                            ? "bg-green-500"
-                            : userItem?.role === "moderator"
-                            ? "bg-blue-500"
-                            : "bg-gray-500"
-                        }`}
-                      >
-                        {userItem?.role}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Dialog
-                        open={openDetailsDialog}
-                        onOpenChange={() => {
-                          setOpenDetailsDialog(false);
-                          dispatch(resetUserDetails()); // Reset user details on closing
-                        }}
-                      >
-                        <Button
-                          onClick={() =>
-                            handleFetchUserDetails(userItem?._id)
-                          }
-                        >
-                          Edit Role
-                        </Button>
-
-                        <Button onClick={() => 
-                          handleDeleteUser(userItem._id)} 
-                          style={{ marginLeft: "10px" }}>Delete
-                          </Button>
-                        <AdminUserDetailsView userDetails={userDetails} />
-                      </Dialog>
-                    </TableCell>
-                  </TableRow>
-                ))
-              : null}
+            {userList.map((user) => (
+              <TableRow key={user._id}>
+                <TableCell>{user.userName}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>
+                  <Badge className={`py-1 px-3 ${user.role === "admin" ? "bg-green-500" : "bg-gray-500"}`}>
+                    {user.role}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Button onClick={() => handleFetchUserDetails(user._id)}>
+                    Edit Role
+                  </Button>
+                  <Button onClick={() => handleDeleteConfirmation(user._id)} style={{ marginLeft: "10px" }}>
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </CardContent>
+      {dialogType === "edit" && (
+        <Dialog
+          open={selectedUserId !== null}
+          onOpenChange={open => !open && handleCloseDialog()}
+        >
+          <AdminUserDetailsView userDetails={userDetails} onClose={handleCloseDialog} />
+        </Dialog>
+      )}
+      {dialogType === "delete" && (
+        <Dialog
+          open={selectedUserId !== null}
+          onOpenChange={open => !open && handleCloseDialog()}
+        >
+          <DialogContent>
+            <p style={{ fontWeight: 'bold', textAlign: 'center' }}>Are you sure you want to delete this user?</p>
+            <div style={{ display: "flex", justifyContent: "space-around", marginTop: "20px" }}>
+              <Button onClick={handleDeleteUser}>Yes</Button>
+              <Button onClick={handleCloseDialog}>No</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </Card>
   );
 }

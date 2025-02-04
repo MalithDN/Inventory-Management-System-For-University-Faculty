@@ -6,26 +6,23 @@ import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllUsersForAdmin,
-  getUserDetailsForAdmin,
   updateUserRole,
-} from "@/store/admin/user-slice"; // Ensure this is correct
+  getUserDetailsForAdmin,
+} from "@/store/admin/user-slice";
 import { useToast } from "../ui/use-toast";
 
 const initialFormData = {
-  role: "", // Initialize role as empty
+  role: "",
 };
 
-function AdminUserDetailsView({ userDetails }) {
+function AdminUserDetailsView({ userDetails, onClose }) {
   const [formData, setFormData] = useState(initialFormData);
-  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { toast } = useToast();
 
   useEffect(() => {
     if (userDetails) {
-      setFormData({ role: userDetails.role }); // Set the role from userDetails
+      setFormData({ role: userDetails.role });
     }
   }, [userDetails]);
 
@@ -45,14 +42,11 @@ function AdminUserDetailsView({ userDetails }) {
     dispatch(updateUserRole({ id: userDetails._id, role })).then((data) => {
       if (data?.payload?.success) {
         console.log("success");
-        setOpenDetailsDialog(false); // Close dialog after role update
-        dispatch(getUserDetailsForAdmin(userDetails._id)); // Re-fetch updated user details
-        dispatch(getAllUsersForAdmin()); // Re-fetch all users
-        setFormData(initialFormData); // Reset form data
+        onClose(); // Use the passed callback to close the dialog
         toast({
           title: data?.payload?.message,
         });
-      }else{
+      } else {
         console.log("not successful")
       }
     });
@@ -102,7 +96,7 @@ function AdminUserDetailsView({ userDetails }) {
                 options: [
                   { id: "admin", label: "admin" },
                   { id: "user", label: "user" },
-                  { id: "moderator", label: "moderator" },
+                  // { id: "moderator", label: "moderator" },
                 ],
               },
             ]}

@@ -27,7 +27,6 @@ router.get("/details/:id", async (req, res) => {
   }
 });
 
-// Route to update user role
 router.put("/updateRole/:id", async (req, res) => {
   const { role } = req.body;
   if (!role) {
@@ -35,18 +34,40 @@ router.put("/updateRole/:id", async (req, res) => {
   }
 
   try {
+    // Fetch the existing user first to compare roles
+    const existingUser = await User.findById(req.params.id);
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the role is the same as before
+    if (existingUser.role === role) {
+      return res.status(200).json({
+        success: true, // No update performed
+        message: "No changes made. The role remains the same.",
+        data: existingUser, // Send back existing user data
+      });
+    }
+
+    // If the role is different, proceed with the update
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { role },
       { new: true }
     );
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json({ data: user });
+
+    res.status(200).json({
+      success: true, // Indicate that the update was successful
+      message: "User role updated successfully", // Custom success message
+      data: user, // Include the updated user data
+    });
   } catch (err) {
     console.error("Error updating user role:", err);  // Log error for debugging
-    res.status(500).json({ message: "Error updating user role", error: err.message });
+    res.status(500).json({
+      success: false, // Indicate failure
+      message: "Error updating user role", // Custom error message
+      error: err.message, // Provide error details
+    });
   }
 });
 
@@ -57,7 +78,10 @@ router.delete("/delete/:id", async (req, res) => {
     if (!result) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({ message: "User deleted successfully" });
+    res.status(200).json({
+      message: "User deleted successfully",
+      success: true
+    });
   } catch (err) {
     console.error("Delete error:", err);  // Log error for debugging
     res.status(500).json({ message: "Server error", error: err.message });

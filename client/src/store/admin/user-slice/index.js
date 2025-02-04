@@ -26,29 +26,39 @@ export const getUserDetailsForAdmin = createAsyncThunk(
 
 export const updateUserRole = createAsyncThunk(
   "/user/updateUserRole",
-  async ({ id, role }) => {
-    const response = await axios.put(
-      `http://localhost:5000/api/admin/users/updateRole/${id}`,
-      { role }
-    );
-    return response.data; // Adjust based on backend response structure
-  }
-);
-
-export const deleteUserForAdmin = createAsyncThunk(
-  "user/deleteUserForAdmin",
-  async (userId, { rejectWithValue }) => {
+  async ({ id, role }, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/admin/users/delete/${userId}`);
-      if (!response.data) {
-        throw new Error('No response body');
+      const response = await axios.put(`http://localhost:5000/api/admin/users/updateRole/${id}`, { role });
+      if (response.status === 200) {
+        dispatch(getAllUsersForAdmin()); // Optionally refresh the whole list
+        return response.data;
+      } else {
+        throw new Error('Failed to update role');
       }
-      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+
+
+export const deleteUserForAdmin = createAsyncThunk(
+  "user/deleteUserForAdmin",
+  async (userId, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/admin/users/delete/${userId}`);
+      if (response.status === 200) {
+        dispatch(getAllUsersForAdmin()); // Refresh the user list after deletion
+        return response.data;
+      } else {
+        throw new Error('Deletion failed');
+      }
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 
 const adminUserSlice = createSlice({
   name: "adminUserSlice",
