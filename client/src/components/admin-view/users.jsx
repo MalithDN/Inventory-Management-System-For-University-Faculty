@@ -72,10 +72,10 @@ function AdminUsersView() {
       <CardHeader>
         <CardTitle>All Users</CardTitle>
       </CardHeader>
-      <CardContent>
-      <div style={{ maxHeight: "68vh", overflowY: "auto" }}>
+      <CardContent style={{overflowY: "auto"}}>
+      <div style={{ maxHeight: "calc(100vh - 215px)"}}>
         <Table>
-        <TableHeader style={{ position: "sticky", top: 0, backgroundColor: "#fff", zIndex: 1 }}>
+        <TableHeader style={{fontSize: "1rem"}}>
           <TableRow>
             <TableHead style={{fontWeight: "bold" }}>Username</TableHead>
             <TableHead style={{fontWeight: "bold" }}>E-mail</TableHead>
