@@ -73,15 +73,16 @@ function AdminUsersView() {
         <CardTitle>All Users</CardTitle>
       </CardHeader>
       <CardContent>
+      <div style={{ maxHeight: "68vh", overflowY: "auto" }}>
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Username</TableHead>
-              <TableHead>E-mail</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Action</TableHead>
-            </TableRow>
-          </TableHeader>
+        <TableHeader style={{ position: "sticky", top: 0, backgroundColor: "#fff", zIndex: 1 }}>
+          <TableRow>
+            <TableHead style={{fontWeight: "bold" }}>Username</TableHead>
+            <TableHead style={{fontWeight: "bold" }}>E-mail</TableHead>
+            <TableHead style={{fontWeight: "bold" }}>Role</TableHead>
+            <TableHead style={{ textAlign: "center", fontWeight: "bold" }}>Action</TableHead>
+          </TableRow>
+        </TableHeader>
           <TableBody>
             {userList.map((user) => (
               <TableRow key={user._id}>
@@ -92,7 +93,7 @@ function AdminUsersView() {
                     {user.role}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{ textAlign: "center"}}>
                   <Button onClick={() => handleFetchUserDetails(user._id)}>
                     Edit Role
                   </Button>
@@ -104,6 +105,7 @@ function AdminUsersView() {
             ))}
           </TableBody>
         </Table>
+        </div>
       </CardContent>
       {dialogType === "edit" && (
         <Dialog
