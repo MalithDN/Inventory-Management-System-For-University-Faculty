@@ -28,7 +28,7 @@ const categorysWithIcon = [
   { id: "Computer", label: "Computer", icon: LaptopMinimal  },
   { id: "Server", label: "Server", icon: Server  },
   { id: "Printer", label: "Printer", icon: Printer  },
-  { id: "Projector", label: "Projecter", icon: Projector },
+  { id: "Projector", label: "Projector", icon: Projector },
   { id: "Router", label: "Router", icon: Router },
   { id: "Camera", label: "Camera", icon: Camera },
 ];
@@ -138,7 +138,7 @@ function ShoppingHome() {
       {categorysWithIcon.map((brandItem) => (
         <Card
           key={brandItem.label} // Add a unique key for each element
-          onClick={() => handleNavigateToListingPage(brandItem, "category")}
+          onClick={() => handleNavigateToListingPage(brandItem, "device")}
           className="group text-purple-700 transition-shadow cursor-pointer hover:shadow-xl transition-all duration-700 hover:scale-105 hover:bg-purple-700 hover:text-white"
         >
           <CardContent className="flex flex-col items-center justify-center p-6">

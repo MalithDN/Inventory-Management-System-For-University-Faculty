@@ -55,7 +55,7 @@ export const addProductFormElements = [
       { id: "Computer", label: "Computer" },
       { id: "Server", label: "Server" },
       { id: "Printer", label: "Printer" },
-      { id: "Projector", label: "Projecter" },
+      { id: "Projector", label: "Projector" },
       { id: "Router", label: "Router" },
       { id: "Camera", label: "Camera" },
     ],
@@ -200,11 +200,11 @@ export const filterOptions = {
     { id: "ET", label: "ET" },
     { id: "AT", label: "AT" },
   ],
-  category: [
+  device: [
     { id: "Computer", label: "Computer" },
     { id: "Server", label: "Server" },
     { id: "Printer", label: "Printer" },
-    { id: "Projecter", label: "Projecter" },
+    { id: "Projector", label: "Projector" },
     { id: "Router", label: "Router" },
     { id: "Camera", label: "Camera" },
   ],
