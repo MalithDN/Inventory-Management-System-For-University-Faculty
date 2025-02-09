@@ -10,6 +10,7 @@ const initialState = {
   userName: "",
   email: "",
   password: "",
+  department: "",
 };
 
 function AuthRegister() {
@@ -35,6 +36,7 @@ function AuthRegister() {
     });
   }
 
+
   console.log(formData);
 
   return (
@@ -53,13 +55,17 @@ function AuthRegister() {
           </Link>
         </p>
       </div>
-      <CommonForm
-        formControls={registerFormControls}
-        buttonText={"Sign Up"}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={onSubmit}
-      />
+
+      {/* Wrapper div with 80% viewport height */}
+      <div className="h-[55vh] overflow-y-auto p-6">
+        <CommonForm
+          formControls={registerFormControls}
+          buttonText={"Sign Up"}
+          formData={formData}
+          setFormData={setFormData}
+          onSubmit={onSubmit}
+        />
+      </div>
     </div>
   );
 }

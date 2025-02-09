@@ -80,6 +80,7 @@ function AdminUsersView() {
             <TableHead style={{fontWeight: "bold" }}>Username</TableHead>
             <TableHead style={{fontWeight: "bold" }}>E-mail</TableHead>
             <TableHead style={{fontWeight: "bold" }}>Role</TableHead>
+            <TableHead style={{fontWeight: "bold" }}>Department</TableHead>
             <TableHead style={{ textAlign: "center", fontWeight: "bold" }}>Action</TableHead>
           </TableRow>
         </TableHeader>
@@ -93,6 +94,7 @@ function AdminUsersView() {
                     {user.role}
                   </Badge>
                 </TableCell>
+                <TableCell style={{ textAlign: "center"}}>{user.department}</TableCell>
                 <TableCell style={{ textAlign: "center"}}>
                   <Button onClick={() => handleFetchUserDetails(user._id)}>
                     Edit Role

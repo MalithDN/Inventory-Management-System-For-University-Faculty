@@ -3,22 +3,72 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 
 //register
+// const registerUser = async (req, res) => {
+//   const { userName, email, password, department } = req.body;
+
+//   try {
+//     const checkUser = await User.findOne({ email });
+//     if (checkUser)
+//       return res.json({
+//         success: false,
+//         message: "User Already exists with the same email! Please try again",
+//       });
+
+//     const hashPassword = await bcrypt.hash(password, 12);
+//     const newUser = new User({
+//       userName,
+//       email,
+//       password: hashPassword,
+//       department
+//     });
+
+//     await newUser.save();
+//     res.status(200).json({
+//       success: true,
+//       message: "Registration successful",
+//     });
+//   } catch (e) {
+//     console.log(e);
+//     res.status(500).json({
+//       success: false,
+//       message: "Some error occured",
+//     });
+//   }
+// };
 const registerUser = async (req, res) => {
-  const { userName, email, password } = req.body;
+  const { userName, email, password, department } = req.body;
+
+  // Validate input fields
+  
+  if (password.length < 8) {
+    return res.status(200).json({
+      success: false,
+      message: "Password must be at least 8 characters long",
+    });
+  }
+
+  if (!department || department.trim() === "") {
+    return res.status(200).json({
+      success: false,
+      message: "Please select a department",
+    });
+  }
 
   try {
     const checkUser = await User.findOne({ email });
-    if (checkUser)
-      return res.json({
+    if (checkUser) {
+      return res.status(200).json({
         success: false,
-        message: "User Already exists with the same email! Please try again",
+        message: "User already exists with the same email! Please try again",
       });
+    }
 
     const hashPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
       userName,
       email,
       password: hashPassword,
+      department,
     });
 
     await newUser.save();
@@ -26,14 +76,17 @@ const registerUser = async (req, res) => {
       success: true,
       message: "Registration successful",
     });
-  } catch (e) {
+  } 
+  catch (e) {
     console.log(e);
-    res.status(500).json({
+    res.status(200).json({
       success: false,
-      message: "Some error occured",
+      message: "Some error occurred",
     });
   }
 };
+
+
 
 //login
 const loginUser = async (req, res) => {
@@ -63,6 +116,7 @@ const loginUser = async (req, res) => {
         role: checkUser.role,
         email: checkUser.email,
         userName: checkUser.userName,
+        department: checkUser.department
       },
       "CLIENT_SECRET_KEY",
       { expiresIn: "60m" }
@@ -76,6 +130,7 @@ const loginUser = async (req, res) => {
         role: checkUser.role,
         id: checkUser._id,
         userName: checkUser.userName,
+        department: checkUser.department
       },
     });
   } catch (e) {

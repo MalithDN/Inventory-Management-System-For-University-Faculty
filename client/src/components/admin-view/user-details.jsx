@@ -84,6 +84,10 @@ function AdminUserDetailsView({ userDetails, onClose }) {
               </Badge>
             </Label>
           </div>
+          <div className="flex items-center justify-between mt-2">
+            <p className="font-medium">Department</p>
+            <Label>{userDetails?.department}</Label>
+          </div>
         </div>
         <Separator />
         <div>

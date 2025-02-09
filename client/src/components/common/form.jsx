@@ -40,6 +40,7 @@ function CommonForm({
               })
             }
             className={inputStyles} // Apply the purple outline styles
+            required={getControlItem.required || false}
           />
         );
         break;

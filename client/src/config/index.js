@@ -5,6 +5,7 @@ export const registerFormControls = [
     placeholder: "Enter your user name",
     componentType: "input",
     type: "text",
+    required: true
   },
   {
     name: "email",
@@ -12,13 +13,28 @@ export const registerFormControls = [
     placeholder: "Enter your email",
     componentType: "input",
     type: "email",
+    required: true
   },
   {
     name: "password",
     label: "Password",
-    placeholder: "Enter your password",
+    placeholder: "Password must be at least 8 characters long",
     componentType: "input",
     type: "password",
+    required: true
+  },
+  {
+    name: "department",
+    label: "Department",
+    componentType: "select",
+    options: [
+      { id: "ICT", label: "ICT" },
+      { id: "IAT", label: "IAT" },
+      { id: "ET", label: "ET" },
+      { id: "AT", label: "AT" },
+      
+    ],
+    required: true
   },
 ];
 
@@ -29,6 +45,7 @@ export const loginFormControls = [
     placeholder: "Enter your email",
     componentType: "input",
     type: "email",
+    required: true
   },
   {
     name: "password",
@@ -36,6 +53,7 @@ export const loginFormControls = [
     placeholder: "Enter your password",
     componentType: "input",
     type: "password",
+    required: true
   },
 ];
 
@@ -145,16 +163,16 @@ export const shoppingViewHeaderMenuItems = [
     label: "Inventory",
     path: "/shop/listing",
   },
-  {
-    id: "About",
-    label: "About us",
-    url: "https://cmb.ac.lk/", 
-  },
-  {
-    id: "iat",
-    label: "Support",
-    path: "/shop/listing",
-  },
+  // {
+  //   id: "About",
+  //   label: "About us",
+  //   url: "https://cmb.ac.lk/", 
+  // },
+  // {
+  //   id: "iat",
+  //   label: "Support",
+  //   path: "/shop/listing",
+  // },
   // {
   //   id: "et",
   //   label: "FOT",
