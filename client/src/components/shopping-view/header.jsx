@@ -1,51 +1,34 @@
 import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logoutUser } from "@/store/auth-slice";
 import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
 import { Label } from "../ui/label";
 
-
 function MenuItems() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
- function handleNavigate(getCurrentMenuItem) {
+  function handleNavigate(getCurrentMenuItem) {
     sessionStorage.removeItem("filters");
     const currentFilter =
       getCurrentMenuItem.id !== "home" &&
       getCurrentMenuItem.id !== "products" &&
       getCurrentMenuItem.id !== "search"
-        ? {
-            category: [getCurrentMenuItem.id],
-          }
+        ? { category: [getCurrentMenuItem.id] }
         : null;
 
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
 
     location.pathname.includes("listing") && currentFilter !== null
-      ? setSearchParams(
-          new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
-        )
+      ? setSearchParams(new URLSearchParams(`?category=${getCurrentMenuItem.id}`))
       : navigate(getCurrentMenuItem.path);
   }
 
@@ -65,17 +48,26 @@ function MenuItems() {
 }
 
 function HeaderRightContent() {
-  const { user } = useSelector((state) => state.auth);
-  useSelector((state) => state.shopCart);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      setUserRole(user.role);
+
+      // Redirect admin to home page after login
+      if (user.role === "admin") {
+        navigate("/shop/home");
+      }
+    }
+  }, [user, navigate]);
 
   function handleLogout() {
     dispatch(logoutUser());
   }
-
-
 
   return (
     <div className="flex flex-col gap-4 lg:items-center lg:flex-row">
@@ -87,32 +79,41 @@ function HeaderRightContent() {
           className="relative"
         >
           <ShoppingCart className="w-6 h-6" />
-  
           <span className="sr-only">User Reports</span>
         </Button>
-        <UserCartWrapper
-          setOpenCartSheet={setOpenCartSheet}
-          //report generating funtion
-        />
+        <UserCartWrapper setOpenCartSheet={setOpenCartSheet} />
       </Sheet>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="select-none cursor-pointer bg-white transition-all duration-700 hover:scale-105 hover:text-white hover:bg-purple-500">
             <AvatarFallback className="font-extrabold text-purple-700 bg-white">
-              {user?.userName[0].toUpperCase()}
+              {user?.userName?.[0]?.toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" className="w-56">
-          <DropdownMenuLabel className="select-none text-purple-700">Logged in as {user?.userName}</DropdownMenuLabel>
+          <DropdownMenuLabel className="select-none text-purple-700">
+            Logged in as {user?.userName}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")} className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105">
-            <UserCog className="w-4 h-4 mr-2 " />
-            Admin Panel
-          </DropdownMenuItem>
+          
+          {/* Show Admin Panel only if user is an admin */}
+          {userRole === "admin" && (
+            <DropdownMenuItem
+              onClick={() => navigate("/shop/admin")}
+              className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105"
+            >
+              <UserCog className="w-4 h-4 mr-2 " />
+              Admin Panel
+            </DropdownMenuItem>
+          )}
+
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout} className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:scale-105 hover:bg purple-700">
+          <DropdownMenuItem
+            onClick={handleLogout}
+            className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:scale-105 hover:bg purple-700"
+          >
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </DropdownMenuItem>
