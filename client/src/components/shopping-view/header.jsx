@@ -57,13 +57,7 @@ function HeaderRightContent() {
   useEffect(() => {
     if (user) {
       setUserRole(user.role);
-
-      // Redirect admin to home page after login
-      if (user.role === "admin") {
-        navigate("/shop/home");
-      }
-    }
-  }, [user, navigate]);
+    }}, [user]);
 
   function handleLogout() {
     dispatch(logoutUser());
@@ -101,7 +95,7 @@ function HeaderRightContent() {
           {/* Show Admin Panel only if user is an admin */}
           {userRole === "admin" && (
             <DropdownMenuItem
-              onClick={() => navigate("/shop/home")}
+              onClick={() => navigate("/admin/dashboard")}
               className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105"
             >
               <UserCog className="w-4 h-4 mr-2 " />
