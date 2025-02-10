@@ -1,5 +1,10 @@
 import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +22,6 @@ import { logoutUser } from "@/store/auth-slice";
 import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
 import { Label } from "../ui/label";
-
 
 function MenuItems() {
   const navigate = useNavigate();
@@ -38,7 +42,9 @@ function MenuItems() {
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
 
     location.pathname.includes("listing") && currentFilter !== null
-      ? setSearchParams(new URLSearchParams(`?category=${getCurrentMenuItem.id}`))
+      ? setSearchParams(
+          new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
+        )
       : navigate(getCurrentMenuItem.path);
   }
 
@@ -59,20 +65,13 @@ function MenuItems() {
 
 function HeaderRightContent() {
   const { user } = useSelector((state) => state.auth);
-  const [openCartSheet, setOpenCartSheet] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Redirect users to /shop/home after login
-    if (user) {
-      navigate("/shop/home");
-    }
-  }, [user, navigate]);
+  const navigate = useNavigate();
+  const [openCartSheet, setOpenCartSheet] = useState(false);
 
   function handleLogout() {
     dispatch(logoutUser());
-    navigate("/login"); // Redirect to login after logout
+    navigate("/login"); // Redirect to login page after logout
   }
 
   return (
@@ -94,7 +93,7 @@ function HeaderRightContent() {
         <DropdownMenuTrigger asChild>
           <Avatar className="select-none cursor-pointer bg-white transition-all duration-700 hover:scale-105 hover:text-white hover:bg-purple-500">
             <AvatarFallback className="font-extrabold text-purple-700 bg-white">
-              {user?.userName?.[0]?.toUpperCase()}
+              {user?.userName[0]?.toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
@@ -103,19 +102,22 @@ function HeaderRightContent() {
             Logged in as {user?.userName}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
+
+          {/* Show Admin Panel button only if user is an admin */}
           {user?.role === "admin" && (
             <DropdownMenuItem
-              onClick={() => navigate("/admin/dashboard")}
+              onClick={() => navigate("/shop/admin-panel")}
               className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105"
             >
               <UserCog className="w-4 h-4 mr-2" />
               Admin Panel
             </DropdownMenuItem>
           )}
+
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleLogout}
-            className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:scale-105 hover:bg-purple-700"
+            className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Logout
@@ -127,6 +129,8 @@ function HeaderRightContent() {
 }
 
 function ShoppingHeader() {
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="flex items-center justify-between h-16 px-4 md:px-6 bg-purple-700">
@@ -152,6 +156,7 @@ function ShoppingHeader() {
         <div className="hidden lg:block">
           <MenuItems />
         </div>
+
         <div className="hidden lg:block">
           <HeaderRightContent />
         </div>
