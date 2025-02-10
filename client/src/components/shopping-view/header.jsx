@@ -109,7 +109,7 @@ function HeaderRightContent() {
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => navigate("/shop/account")} className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105">
             <UserCog className="w-4 h-4 mr-2 " />
-            Account
+            Admin Panel
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout} className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:scale-105 hover:bg purple-700">
