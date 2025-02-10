@@ -101,7 +101,7 @@ function HeaderRightContent() {
           {/* Show Admin Panel only if user is an admin */}
           {userRole === "admin" && (
             <DropdownMenuItem
-              onClick={() => navigate("/admin/dashboard")}
+              onClick={() => navigate("/shop/home")}
               className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105"
             >
               <UserCog className="w-4 h-4 mr-2 " />
