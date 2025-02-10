@@ -107,8 +107,8 @@ function HeaderRightContent() {
         <DropdownMenuContent side="right" className="w-56">
           <DropdownMenuLabel className="select-none text-purple-700">Logged in as {user?.userName}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")} className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105">
-            <UserCog className="w-4 h-4 mr-2 " />
+          <DropdownMenuItem onClick={() => navigate("/admin/dashboard")} className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105">
+            <Settings className="w-4 h-4 mr-2 " />
             Admin Panel
           </DropdownMenuItem>
           <DropdownMenuSeparator />
