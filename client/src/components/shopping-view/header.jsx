@@ -4,12 +4,20 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logoutUser } from "@/store/auth-slice";
 import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
 import { Label } from "../ui/label";
+
 
 function MenuItems() {
   const navigate = useNavigate();
@@ -22,7 +30,9 @@ function MenuItems() {
       getCurrentMenuItem.id !== "home" &&
       getCurrentMenuItem.id !== "products" &&
       getCurrentMenuItem.id !== "search"
-        ? { category: [getCurrentMenuItem.id] }
+        ? {
+            category: [getCurrentMenuItem.id],
+          }
         : null;
 
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
@@ -48,25 +58,21 @@ function MenuItems() {
 }
 
 function HeaderRightContent() {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
+    // Redirect users to /shop/home after login
     if (user) {
-      setUserRole(user.role);
-
-      // Redirect admin to home page after login
-      if (user.role === "admin") {
-        navigate("/shop/home");
-      }
+      navigate("/shop/home");
     }
   }, [user, navigate]);
 
   function handleLogout() {
     dispatch(logoutUser());
+    navigate("/login"); // Redirect to login after logout
   }
 
   return (
@@ -97,22 +103,19 @@ function HeaderRightContent() {
             Logged in as {user?.userName}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          
-          {/* Show Admin Panel only if user is an admin */}
-          {userRole === "admin" && (
+          {user?.role === "admin" && (
             <DropdownMenuItem
-              onClick={() => navigate("/shop/home")}
+              onClick={() => navigate("/admin/dashboard")}
               className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105"
             >
-              <UserCog className="w-4 h-4 mr-2 " />
+              <UserCog className="w-4 h-4 mr-2" />
               Admin Panel
             </DropdownMenuItem>
           )}
-
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleLogout}
-            className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:scale-105 hover:bg purple-700"
+            className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:scale-105 hover:bg-purple-700"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Logout
@@ -124,12 +127,13 @@ function HeaderRightContent() {
 }
 
 function ShoppingHeader() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="flex items-center justify-between h-16 px-4 md:px-6 bg-purple-700">
-        <Link to="/shop/home" className="flex items-center gap-2 transition-all duration-700 hover:scale-105">
+        <Link
+          to="/shop/home"
+          className="flex items-center gap-2 transition-all duration-700 hover:scale-105"
+        >
           <HousePlug className="w-8 h-8 text-white" />
           <span className="font-bold text-white">Inventory Management System</span>
         </Link>
@@ -148,7 +152,6 @@ function ShoppingHeader() {
         <div className="hidden lg:block">
           <MenuItems />
         </div>
-
         <div className="hidden lg:block">
           <HeaderRightContent />
         </div>
