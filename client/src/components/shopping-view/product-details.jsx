@@ -20,17 +20,26 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     setReviewMsg("");
   }
 
-
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 sm:p-8 lg:p-10 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
         <div className="relative p-6 bg-purple-900 border border-gray-200 rounded-lg shadow-xl">
+          {/* Image Display */}
+          {productDetails?.image && (
+            <img
+              src={productDetails.image}
+              alt={productDetails.title || "Product Image"}
+              className="w-full h-64 object-cover rounded-md mb-4"
+            />
+          )}
+          
           <h1 className="mb-2 text-xl font-semibold text-muted">ID: {productDetails?.did || "N/A"}</h1>
-          <h2 className="mb-2 text-xl font-semibold text-muted">Device: {productDetails?.device || "Unspecified"}</h2> 
-          <h2 className="mb-2 text-xl font-semibold text-muted">Hall Type: {productDetails?.halltype || "Unspecified"}</h2>  
-          <h2 className="mb-2 text-xl font-semibold text-muted">Hall ID: {productDetails?.hallid || "Unknown"}</h2>    
-          <h2 className="mb-2 text-xl font-semibold text-muted">Condition: {productDetails?.condition || "Not available"}</h2>   
+          <h2 className="mb-2 text-xl font-semibold text-muted">Device: {productDetails?.device || "Unspecified"}</h2>
+          <h2 className="mb-2 text-xl font-semibold text-muted">Hall Type: {productDetails?.halltype || "Unspecified"}</h2>
+          <h2 className="mb-2 text-xl font-semibold text-muted">Hall ID: {productDetails?.hallid || "Unknown"}</h2>
+          <h2 className="mb-2 text-xl font-semibold text-muted">Condition: {productDetails?.condition || "Not available"}</h2>
           <h2 className="mb-2 text-xl font-semibold text-muted">Repair Date: {productDetails?.repairdate || "No date provided"}</h2>
+          <h2 className="mb-2 text-xl font-semibold text-muted">Department: {productDetails?.department || "No date provided"}</h2>
         </div>
 
         <div className="relative p-6 bg-white border border-gray-200 rounded-lg shadow-md">
@@ -40,8 +49,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             <p className="text-lg text-gray-600">Description:</p>
             <p className="mt-2 text-base text-gray-700">{productDetails?.description || "No description available."}</p>
           </div>
-          
-
         </div>
       </DialogContent>
     </Dialog>

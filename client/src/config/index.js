@@ -34,6 +34,7 @@ export const registerFormControls = [
       { id: "AT", label: "AT" },
       
     ],
+    defaultOption: { id: "ICT", label: "ICT" },
     required: true
   },
 ];
@@ -64,6 +65,7 @@ export const addProductFormElements = [
     componentType: "input",
     type: "text",
     placeholder: "Enter Inventory Name",
+    required: true
   },
   {
     label: "Device",
@@ -77,6 +79,8 @@ export const addProductFormElements = [
       { id: "Router", label: "Router" },
       { id: "Camera", label: "Camera" },
     ],
+    defaultOption: { id: "Computer", label: "Computer" },
+    required: true
   },
 
   {
@@ -85,12 +89,14 @@ export const addProductFormElements = [
     componentType: "input",
     type: "number",
     placeholder: "Enter Device ID",
+    required: true
   },
   {
     label: "Description",
     name: "description",
     componentType: "textarea",
     placeholder: "Enter Inventory description",
+    required: true
   },
   {
     label: "Department",
@@ -103,6 +109,8 @@ export const addProductFormElements = [
       { id: "AT", label: "AT" },
       
     ],
+    defaultOption: { id: "ICT", label: "ICT" },
+    required: true
   },
   
   
@@ -117,6 +125,8 @@ export const addProductFormElements = [
       { id: "Office Room", label: "Office Room" },
 
     ],
+    defaultOption: { id: "Laboratory", label: "Laboratory" },
+    required: true
   },
   {
     label: "Hall ID",
@@ -129,7 +139,10 @@ export const addProductFormElements = [
       { id: "3rd", label: "3rd floor" },
       { id: "4th", label: "4th floor" },
       { id: "5th", label: "5th floor" },
-    ]
+
+    ],
+    defaultOption: { id: "Ground", label: "Ground" },
+    required: true
   },
   {
     label: "Condition",
@@ -138,9 +151,11 @@ export const addProductFormElements = [
     options: [
      { id: "Functional", label: "Working/Functional" },
      { id: "Damaged", label: "Damaged" },
-     { id: "New", label: "New" },
+     { id: "maintenance", label: "Under Maintenance" },
      { id: "Faulty", label: "Faulty" },
-    ]
+    ],
+    defaultOption: { id: "Functional", label: "Working/Functional" },
+    required: true
   },
   
   {
@@ -149,6 +164,7 @@ export const addProductFormElements = [
     componentType: "input",
     type: "date",
     placeholder: "Select a date",
+    required: true
   }
 ];
 
