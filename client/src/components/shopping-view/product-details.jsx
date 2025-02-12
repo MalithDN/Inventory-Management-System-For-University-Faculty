@@ -38,7 +38,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <h2 className="mb-2 text-xl font-semibold text-muted">Hall Type: {productDetails?.halltype || "Unspecified"}</h2>
           <h2 className="mb-2 text-xl font-semibold text-muted">Hall ID: {productDetails?.hallid || "Unknown"}</h2>
           <h2 className="mb-2 text-xl font-semibold text-muted">Condition: {productDetails?.condition || "Not available"}</h2>
-          <h2 className="mb-2 text-xl font-semibold text-muted">Repair Date: {productDetails?.repairdate || "No date provided"}</h2>
+          <h2 className="mb-2 text-xl font-semibold text-muted">Repair Date: {productDetails?.Repairdate.split("T")[0] || "No date provided"}</h2>
           <h2 className="mb-2 text-xl font-semibold text-muted">Department: {productDetails?.department || "No date provided"}</h2>
         </div>
 

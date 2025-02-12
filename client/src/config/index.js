@@ -313,3 +313,13 @@ export const addressFormControls = [
     placeholder: "Enter any additional notes",
   },
 ];
+//Create for Notification function
+export const EditRepairDate = [
+  {
+    label: "Repair Date",
+    name: "Repairdate",
+    componentType: "input",
+    type: "date",
+    placeholder: "Select a date",
+  },
+];

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Dialog } from "../ui/dialog";
+// import AdminProductTile from "@/components/admin-view/product-tile";
+import CommonForm from "@/components/common/form";
+
+// import { Dialog } from "../ui/dialog";
 import {
   Table,
   TableBody,
@@ -10,96 +11,180 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import AdminOrderDetailsView from "./order-details";
-import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllOrdersForAdmin,
-  getOrderDetailsForAdmin,
-  resetOrderDetails,
-} from "@/store/admin/order-slice";
-import { Badge } from "../ui/badge";
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
 
-function AdminOrdersView() {
-  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { orderList, orderDetails } = useSelector((state) => state.adminOrder);
+import { useToast } from "@/components/ui/use-toast";
+
+import {
+  addNewProduct,
+  // deleteProduct,
+  editProduct,
+  fetchAllProducts,
+} from "@/store/admin/products-slice";
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { EditRepairDate } from "@/config";
+
+const initialFormData = {
+  image: null,
+  title: "",
+  description: "",
+  department: "",
+  device: "",
+  did: "",
+  halltype: "",
+  hallid: "",
+  condition: "",
+  Repairdate: "",
+};
+
+function AdminOrdersView({}) {
+  const [openCreateProductsDialog, setOpenCreateProductsDialog] =
+    useState(false);
+  const [formData, setFormData] = useState(initialFormData);
+  const [imageFile, setImageFile] = useState(null);
+  // const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  // const [imageLoadingState, setImageLoadingState] = useState(false);
+  const [currentEditedId, setCurrentEditedId] = useState(null);
+
+  const { productList } = useSelector((state) => state.adminProducts);
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
-  function handleFetchOrderDetails(getId) {
-    dispatch(getOrderDetailsForAdmin(getId));
+  function onSubmit(event) {
+    event.preventDefault();
+
+    currentEditedId !== null
+      ? dispatch(
+          editProduct({
+            id: currentEditedId,
+            formData,
+          })
+        ).then((data) => {
+          console.log(data, "edit");
+
+          if (data?.payload?.success) {
+            dispatch(fetchAllProducts());
+            setFormData(initialFormData);
+            setOpenCreateProductsDialog(false);
+            setCurrentEditedId(null);
+          }
+        })
+      : dispatch(
+          addNewProduct({
+            ...formData,
+            image: uploadedImageUrl,
+          })
+        ).then((data) => {
+          if (data?.payload?.success) {
+            dispatch(fetchAllProducts());
+            setOpenCreateProductsDialog(false);
+            setImageFile(null);
+            setFormData(initialFormData);
+            toast({
+              title: "Inventory add successfully",
+            });
+          }
+        });
   }
 
   useEffect(() => {
-    dispatch(getAllOrdersForAdmin());
+    dispatch(fetchAllProducts());
   }, [dispatch]);
 
-  console.log(orderDetails, "orderList");
-
-  useEffect(() => {
-    if (orderDetails !== null) setOpenDetailsDialog(true);
-  }, [orderDetails]);
-
+  console.log(formData, "productList");
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>All Notification</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Notification ID</TableHead>
-              <TableHead>Notification Date</TableHead>
-              <TableHead>Inventory Status</TableHead>
-              <TableHead>Action</TableHead>
-              <TableHead>
-                <span className="sr-only">Details</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {orderList && orderList.length > 0
-              ? orderList.map((orderItem) => (
-                  <TableRow>
-                    <TableCell>{orderItem?._id}</TableCell>
-                    <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
-                    <TableCell>
-                      <Badge
-                        className={`py-1 px-3 ${
-                          orderItem?.orderStatus === "confirmed"
-                            ? "bg-green-500"
-                            : orderItem?.orderStatus === "rejected"
-                            ? "bg-red-600"
-                            : "bg-black"
-                        }`}
-                      >
-                        {orderItem?.orderStatus}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>${orderItem?.totalAmount}</TableCell>
-                    <TableCell>
-                      <Dialog
-                        open={openDetailsDialog}
-                        onOpenChange={() => {
-                          setOpenDetailsDialog(false);
-                          dispatch(resetOrderDetails());
-                        }}
-                      >
+      <div>
+        {
+          <CardHeader>
+            <CardTitle>All Notification</CardTitle>
+          </CardHeader>
+        }
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Product ID</TableHead>
+                <TableHead>Title</TableHead>
+                <TableHead>Device</TableHead>
+                <TableHead>Department</TableHead>
+                <TableHead>Hall ID</TableHead>
+                <TableHead>Repair Date</TableHead>
+                <TableHead>Condition</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {productList && productList.length > 0
+                ? productList.map((productItem) => (
+                    <TableRow>
+                      <TableCell>{productItem.did}</TableCell>
+                      <TableCell>{productItem.title}</TableCell>
+                      <TableCell>{productItem.device}</TableCell>
+                      <TableCell>{productItem.department}</TableCell>
+                      <TableCell>{productItem.hallid}</TableCell>
+                      <TableCell style={{ color: "red" }}>
+                        {productItem.Repairdate.split("T")[0]}
+                      </TableCell>
+                      <TableCell>{productItem.condition}</TableCell>
+                      <TableCell>
                         <Button
-                          onClick={() =>
-                            handleFetchOrderDetails(orderItem?._id)
-                          }
+                          onClick={() => {
+                            setOpenCreateProductsDialog(true);
+                            setCurrentEditedId(productItem?._id);
+                            setFormData(productItem);
+                          }}
                         >
-                          View Details
+                          Edit
                         </Button>
-                        <AdminOrderDetailsView orderDetails={orderDetails} />
-                      </Dialog>
-                    </TableCell>
-                  </TableRow>
-                ))
-              : null}
-          </TableBody>
-        </Table>
-      </CardContent>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : null}
+            </TableBody>
+          </Table>
+        </CardContent>
+        <Sheet
+          open={openCreateProductsDialog}
+          onOpenChange={() => {
+            setOpenCreateProductsDialog(false);
+            setCurrentEditedId(null);
+            setFormData(initialFormData);
+          }}
+        >
+          <SheetContent side="right" className="overflow-auto">
+            <SheetHeader>
+              <SheetTitle>
+                {currentEditedId !== null
+                  ? "Edit Inventory"
+                  : "Add New Inventory"}
+              </SheetTitle>
+            </SheetHeader>
+
+            <div className="py-6">
+              <CommonForm
+                onSubmit={onSubmit}
+                formData={formData}
+                setFormData={setFormData}
+                buttonText={currentEditedId !== null ? "Edit" : "Add"}
+                formControls={EditRepairDate} //client/src/config/index.js
+              />
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
     </Card>
   );
 }
