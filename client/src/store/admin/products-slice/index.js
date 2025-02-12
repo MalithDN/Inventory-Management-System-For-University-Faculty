@@ -34,6 +34,28 @@ export const fetchAllProducts = createAsyncThunk(
   }
 );
 
+// New fetchFilteredProducts to handle filtering
+export const fetchFilteredProducts = createAsyncThunk(
+  "/products/fetchFilteredProducts",
+  async ({ filters, sortParams }) => {
+    // Assuming the backend supports filtering via query parameters, 
+    // you can add the `filters` and `sortParams` to the API request.
+    // Here, we are adding the `device` filter to the query string.
+    const { device } = filters;
+
+    const result = await axios.get(
+      `http://localhost:5000/api/admin/products/get`, {
+        params: {
+          device: device ? device.join(",") : undefined,
+          sort: sortParams,  // if applicable for sorting
+        },
+      }
+    );
+
+    return result?.data;
+  }
+);
+
 export const editProduct = createAsyncThunk(
   "/products/editProduct",
   async ({ id, formData }) => {
@@ -76,6 +98,18 @@ const AdminProductsSlice = createSlice({
         state.productList = action.payload.data;
       })
       .addCase(fetchAllProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.productList = [];
+      })
+      // Handling filtered products
+      .addCase(fetchFilteredProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchFilteredProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.productList = action.payload.data;
+      })
+      .addCase(fetchFilteredProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.productList = [];
       });

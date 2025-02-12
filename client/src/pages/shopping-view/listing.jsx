@@ -14,7 +14,9 @@ import { sortOptions } from "@/config";
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
+  // fetchFilteredProducts
 } from "@/store/shop/products-slice";
+// import { fetchFilteredProducts } from "@/store/shop/products-slice";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,7 +51,8 @@ function ShoppingListing() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const { toast } = useToast();
 
-  const categorySearchParam = searchParams.get("");
+  // Extract the device filter from the URL
+  const deviceSearchParam = searchParams.get("device");
 
   function handleSort(value) {
     setSort(value);
@@ -82,11 +85,19 @@ function ShoppingListing() {
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
-
   useEffect(() => {
+    // Check if device filter is applied in the URL
+    if (deviceSearchParam) {
+      // Split the device filter (e.g., "Computer,Server,Printer") into an array
+      const devices = deviceSearchParam.split(",");
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        device: devices, // Update the filters state with the selected devices
+      }));
+    }
     setSort("price-lowtohigh");
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
-  }, [categorySearchParam]);
+  }, [deviceSearchParam]);
 
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
