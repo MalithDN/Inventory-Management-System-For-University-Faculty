@@ -112,7 +112,8 @@ function AdminOrdersView({}) {
             <CardTitle>All Notification</CardTitle>
           </CardHeader>
         }
-        <CardContent>
+        <CardContent style={{overflowY: "auto"}}>
+        <div style={{ maxHeight: "calc(100vh - 215px)"}}>
           <Table>
             <TableHeader>
               <TableRow>
@@ -155,6 +156,7 @@ function AdminOrdersView({}) {
                 : null}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
         <Sheet
           open={openCreateProductsDialog}

@@ -66,7 +66,7 @@ function ProductImageUpload({
   }, [imageFile]);
 
   return (
-    <div
+    <div 
       className={`w-full  mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}
     >
       <Label className="block mb-2 text-lg font-bold text-purple-700">Upload Image</Label>
