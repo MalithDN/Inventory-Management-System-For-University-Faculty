@@ -35,6 +35,12 @@ const adminSidebarMenuItems = [
     path: "/admin/users",
     icon: <Users />,  
   },
+  {
+    id: "systemlog",
+    label: "System Log",
+    path: "/admin/users",
+    icon: <Users />,  
+  },
 ];
 
 function MenuItems({ setOpen }) {
