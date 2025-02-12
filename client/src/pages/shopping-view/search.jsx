@@ -14,6 +14,7 @@ import { useSearchParams } from "react-router-dom";
 function SearchProducts() {
   const [keyword, setKeyword] = useState("");
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const [searchPerformed, setSearchPerformed] = useState(false); // Track if a search has been performed
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { searchResults } = useSelector((state) => state.shopSearch);
@@ -23,16 +24,20 @@ function SearchProducts() {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (keyword && keyword.trim() !== "" && keyword.trim().length > 3) {
-      setTimeout(() => {
+    const timeoutId = setTimeout(() => {
+      if (keyword && keyword.trim() !== "") {
+        setSearchPerformed(true); // Mark search as performed
         setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
         dispatch(getSearchResults(keyword));
-      }, 100);
-    } else {
-      setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
-      dispatch(resetSearchResults());
-    }
-  }, [keyword]);
+      } else {
+        setSearchPerformed(false); // Reset when input is cleared
+        setSearchParams(new URLSearchParams(`?keyword=`));
+        dispatch(resetSearchResults());
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [keyword, dispatch, setSearchParams]);
 
   function handleGetProductDetails(getCurrentProductId) {
     console.log(getCurrentProductId);
@@ -58,17 +63,22 @@ function SearchProducts() {
           />
         </div>
       </div>
-      {!searchResults.length ? (
+
+      {/* Show "No result found!" only if a search has been performed and returned no results */}
+      {searchPerformed && searchResults.length === 0 && (
         <h1 className="text-5xl font-extrabold">No result found!</h1>
-      ) : null}
+      )}
+
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {searchResults.map((item) => (
           <ShoppingProductTile
+            key={item.id}
             product={item}
             handleGetProductDetails={handleGetProductDetails}
           />
         ))}
       </div>
+
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
