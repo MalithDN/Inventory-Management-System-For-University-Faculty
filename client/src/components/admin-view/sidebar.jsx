@@ -4,6 +4,7 @@ import {
   Bell ,  
   Warehouse ,
   Users,
+  ScrollText
 
 } from "lucide-react";
 import { Fragment } from "react";
@@ -39,7 +40,7 @@ const adminSidebarMenuItems = [
     id: "systemlog",
     label: "System Log",
     path: "/admin/users",
-    icon: <Users />,  
+    icon: <ScrollText />,  
   },
 ];
 
