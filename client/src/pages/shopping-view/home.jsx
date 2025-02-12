@@ -154,24 +154,26 @@ function ShoppingHome() {
 </section>
 
 
-      <section className="py-12">
-        <div className="container px-4 mx-auto">
-          <h2 className="mb-8 text-3xl font-bold text-center text-purple-700">
-            Inventory Information
-          </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
-                  <ShoppingProductTile
-                    handleGetProductDetails={handleGetProductDetails}
-                    product={productItem}
-                    
-                  />
-                ))
-              : null}
-          </div>
-        </div>
-      </section>
+<section className="py-12">
+  <div className="container px-4 mx-auto">
+    <h2 className="mb-8 text-3xl font-bold text-center text-purple-700">
+      Inventory Information
+    </h2>
+    <div className="h-96 overflow-y-auto p-4"> {/* Add height and overflow classes */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {productList && productList.length > 0
+          ? productList.map((productItem) => (
+              <ShoppingProductTile
+                handleGetProductDetails={handleGetProductDetails}
+                product={productItem}
+              />
+            ))
+          : null}
+      </div>
+    </div>
+  </div>
+</section>
+
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
