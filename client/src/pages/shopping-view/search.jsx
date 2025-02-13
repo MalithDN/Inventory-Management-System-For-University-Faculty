@@ -6,6 +6,7 @@ import { fetchProductDetails } from "@/store/shop/products-slice";
 import {
   getSearchResults,
   resetSearchResults,
+  fetchAllProducts,
 } from "@/store/shop/search-slice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +19,7 @@ function SearchProducts() {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { searchResults } = useSelector((state) => state.shopSearch);
+  const { productList } = useSelector((state) => state.shopProducts); // Get all products
   const { productDetails } = useSelector((state) => state.shopProducts);
   const { user } = useSelector((state) => state.auth);
   useSelector((state) => state.shopCart);
@@ -33,8 +35,9 @@ function SearchProducts() {
         setSearchPerformed(false); // Reset when input is cleared
         setSearchParams(new URLSearchParams(`?keyword=`));
         dispatch(resetSearchResults());
+        dispatch(fetchAllProducts()); // Dispatch action to fetch all products when search is empty
       }
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timeoutId);
   }, [keyword, dispatch, setSearchParams]);
@@ -49,6 +52,10 @@ function SearchProducts() {
   }, [productDetails]);
 
   console.log(searchResults, "searchResults");
+
+  // Choose to display search results if available, otherwise display all products
+  const productsToDisplay =
+    searchResults.length > 0 ? searchResults : searchPerformed ? [] : productList;
 
   return (
     <div className="container px-4 py-8 mx-auto md:px-6">
@@ -69,15 +76,18 @@ function SearchProducts() {
         <h1 className="text-5xl font-extrabold">No result found!</h1>
       )}
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {searchResults.map((item) => (
-          <ShoppingProductTile
-            key={item.id}
-            product={item}
-            handleGetProductDetails={handleGetProductDetails}
-          />
-        ))}
-      </div>
+      {/* Only display products if there are valid search results or inventory */}
+      {productsToDisplay.length > 0 && (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {productsToDisplay.map((item) => (
+            <ShoppingProductTile
+              key={item.id}
+              product={item}
+              handleGetProductDetails={handleGetProductDetails}
+            />
+          ))}
+        </div>
+      )}
 
       <ProductDetailsDialog
         open={openDetailsDialog}
