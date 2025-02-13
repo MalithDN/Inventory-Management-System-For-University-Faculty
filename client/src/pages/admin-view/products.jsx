@@ -23,13 +23,13 @@ const initialFormData = {
   image: null,
   title: "",
   description: "",
-  department: "",
-  device: "",
+  department: "ICT",       
+  device: "Computer",     
   did: "",
-  halltype: "",
-  hallid: "",
-  condition: "",
-  Repairdate: "", 
+  halltype: "Laboratory",
+  hallid: "A 101",    
+  condition: "Working/Functional",
+  Repairdate: "",
 };
 
 function AdminProducts() {

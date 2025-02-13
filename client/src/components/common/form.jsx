@@ -53,7 +53,8 @@ function CommonForm({
           [getControlItem.name]: value,
         })
       }
-      value={value || getControlItem.defaultOption?.id}
+      // Use the value from formData or fall back to the defaultOption
+      value={formData[getControlItem.name] || getControlItem.defaultOption?.id || ""}
     >
       <SelectTrigger className={`w-full ${inputStyles}`}>
         <SelectValue />
@@ -68,6 +69,7 @@ function CommonForm({
     </Select>
   );
   break;
+
 
         
 
