@@ -33,13 +33,14 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             />
           )}
           
-          <h1 className="mb-2 text-xl font-semibold text-muted">ID: {productDetails?.did || "N/A"}</h1>
-          <h2 className="mb-2 text-xl font-semibold text-muted">Device: {productDetails?.device || "Unspecified"}</h2>
-          <h2 className="mb-2 text-xl font-semibold text-muted">Hall Type: {productDetails?.halltype || "Unspecified"}</h2>
-          <h2 className="mb-2 text-xl font-semibold text-muted">Hall ID: {productDetails?.hallid || "Unknown"}</h2>
-          <h2 className="mb-2 text-xl font-semibold text-muted">Condition: {productDetails?.condition || "Not available"}</h2>
-          <h2 className="mb-2 text-xl font-semibold text-muted">Repair Date: {productDetails?.Repairdate.split("T")[0] || "No date provided"}</h2>
-          <h2 className="mb-2 text-xl font-semibold text-muted">Department: {productDetails?.department || "No date provided"}</h2>
+          <h1 className="mb-2 text-[1rem] font-bold text-muted">ID: {productDetails?.did || "N/A"}</h1>
+<h2 className="mb-2 text-[1rem] font-bold text-muted">Device: {productDetails?.device || "Unspecified"}</h2>
+<h2 className="mb-2 text-[1rem] font-bold text-muted">Hall Type: {productDetails?.halltype || "Unspecified"}</h2>
+<h2 className="mb-2 text-[1rem] font-bold text-muted">Hall ID: {productDetails?.hallid || "Unknown"}</h2>
+<h2 className="mb-2 text-[1rem] font-bold text-muted">Condition: {productDetails?.condition || "Not available"}</h2>
+<h2 className="mb-2 text-[1rem] font-bold text-muted">Repair Date: {productDetails?.Repairdate.split("T")[0] || "No date provided"}</h2>
+<h2 className="mb-2 text-[1rem] font-bold text-muted">Department: {productDetails?.department || "No date provided"}</h2>
+
         </div>
 
         <div className="relative p-6 bg-white border border-gray-200 rounded-lg shadow-md">
