@@ -122,7 +122,7 @@ function AdminProducts() {
           Add New Inventory
         </Button>
       </div>
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 max-h-[500px] overflow-y-auto">
         {productList && productList.length > 0
           ? productList.map((productItem) => (
               <AdminProductTile

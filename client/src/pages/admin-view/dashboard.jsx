@@ -49,7 +49,8 @@ function AdminDashboard() {
   console.log(featureImageList, "featureImageList");
 
   return (
-    <div>
+    <div style={{overflowY: "auto"}}>
+    <div style={{ maxHeight: "calc(100vh - calc(100vh * 20/100)"}}>
       <ProductImageUpload
         imageFile={imageFile}
         setImageFile={setImageFile}
@@ -88,6 +89,7 @@ function AdminDashboard() {
             ))
           : null}
       </div>
+    </div>
     </div>
   );
 }

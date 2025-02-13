@@ -8,11 +8,13 @@ function ShoppingProductTile({
   return (
     <Card className="w-full max-w-sm mx-auto transition-all duration-700 hover:scale-105 hover:shadow-lg">
       <div onClick={() => handleGetProductDetails(product?._id)}>
+      <div className="w-full h-full flex justify-center items-center">
         <img
           src={product?.image || "/placeholder.jpg"}
           alt={product?.title}
           className="w-full h-48 object-cover rounded-t-lg p-2"
         />
+        </div>
         <CardContent className="p-4">
           <div className="mb-2">
             <span className="text-[16px] text-muted-foreground">

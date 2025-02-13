@@ -10,15 +10,18 @@ function AdminProductTile({
 }) {
   return (
     <Card className="w-full max-w-sm mx-auto">
+      
       <div>
-        
         <CardContent>
-        <h2 className="mt-2 mb-2 text-xl font-bold">Title: {product?.title}</h2>
+          <div className="w-full h-[200px] flex justify-center items-center">
+          <img 
+            src={product?.image} 
+            alt={product?.title} 
+            className="w-full h-auto mb-4 rounded-md" 
+          /></div>
+          <h2 className="mt-2 mb-2 text-xl font-bold">Title: {product?.title}</h2>
           <h2 className="mt-2 mb-2 text-xl font-bold">ID: {product?.did}</h2>
           <h2 className="mt-2 mb-2 text-xl font-bold">Device: {product?.device}</h2>
-          <div className="flex items-center justify-between mb-2">
-            
-          </div>
         </CardContent>
         <CardFooter className="flex items-center justify-between">
           <Button
@@ -32,7 +35,8 @@ function AdminProductTile({
           </Button>
           <Button onClick={() => handleDelete(product?._id)}>Delete</Button>
         </CardFooter>
-      </div>
+        </div>
+      
     </Card>
   );
 }

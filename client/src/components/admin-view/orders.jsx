@@ -141,7 +141,14 @@ function AdminOrdersView({}) {
                         {productItem.Repairdate.split("T")[0]}
                       </Badge>
                       </TableCell>
-                      <TableCell>{productItem.condition}</TableCell>
+                      <TableCell>
+                      <Badge className={`py-1 px-3 ${productItem.condition === "Faulty" ? "bg-yellow-500" : 
+                                                    productItem.condition === "Working/Functional" ? "bg-green-500" : 
+                                                    productItem.condition === "Damaged" ? "bg-red-500" : 
+                                                    productItem.condition === "Under Maintenance" ? "bg-blue-500" : "bg-gray-500"}`}>
+                      {productItem.condition}
+                    </Badge> 
+                      </TableCell>
                       <TableCell>
                         <Button
                           onClick={() => {
