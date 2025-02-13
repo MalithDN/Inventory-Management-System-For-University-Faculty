@@ -23,7 +23,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-
+import { Badge } from "../ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 
 import {
@@ -109,22 +109,22 @@ function AdminOrdersView({}) {
       <div>
         {
           <CardHeader>
-            <CardTitle>All Notification</CardTitle>
+            <CardTitle>All Notifications</CardTitle>
           </CardHeader>
         }
         <CardContent style={{overflowY: "auto"}}>
         <div style={{ maxHeight: "calc(100vh - 215px)"}}>
           <Table>
-            <TableHeader>
+            <TableHeader style={{fontSize: "1rem"}}>
               <TableRow>
-                <TableHead>Product ID</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Device</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Hall ID</TableHead>
-                <TableHead>Repair Date</TableHead>
-                <TableHead>Condition</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead style={{fontWeight: "bold" }}>Product ID</TableHead>
+                <TableHead style={{fontWeight: "bold" }}>Title</TableHead>
+                <TableHead style={{fontWeight: "bold" }}>Device</TableHead>
+                <TableHead style={{fontWeight: "bold" }}>Department</TableHead>
+                <TableHead style={{fontWeight: "bold" }}>Hall ID</TableHead>
+                <TableHead style={{fontWeight: "bold" }}>Repair Date</TableHead>
+                <TableHead style={{fontWeight: "bold" }}>Condition</TableHead>
+                <TableHead style={{fontWeight: "bold" }}>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -137,7 +137,9 @@ function AdminOrdersView({}) {
                       <TableCell>{productItem.department}</TableCell>
                       <TableCell>{productItem.hallid}</TableCell>
                       <TableCell style={{ color: "red" }}>
+                      <Badge className={`py-1 px-3 bg-red-500 `}>
                         {productItem.Repairdate.split("T")[0]}
+                      </Badge>
                       </TableCell>
                       <TableCell>{productItem.condition}</TableCell>
                       <TableCell>

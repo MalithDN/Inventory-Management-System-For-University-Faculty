@@ -26,7 +26,7 @@ const adminSidebarMenuItems = [
   },
   {
     id: "orders",
-    label: "Notification",
+    label: "Notifications",
     path: "/admin/orders",
     icon: <Bell />,  
   },

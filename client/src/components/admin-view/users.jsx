@@ -90,7 +90,7 @@ function AdminUsersView() {
                 <TableCell>{user.userName}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <Badge className={`py-1 px-3 ${user.role === "admin" ? "bg-green-500" : "bg-gray-500"}`}>
+                  <Badge className={`py-1 px-3 ${user.role === "admin" ? "bg-green-500" : "bg-blue-500"}`}>
                     {user.role}
                   </Badge>
                 </TableCell>
