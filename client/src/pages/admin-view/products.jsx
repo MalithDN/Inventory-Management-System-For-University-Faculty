@@ -90,6 +90,24 @@ function AdminProducts() {
     });
   }
 
+  useEffect(() => {
+    if (currentEditedId !== null) {
+      // Find the current product being edited
+      const currentProduct = productList.find(item => item._id === currentEditedId);
+      if (currentProduct) {
+        // Format Repairdate to YYYY-MM-DD
+        const formattedRepairDate = currentProduct.Repairdate
+          ? new Date(currentProduct.Repairdate).toISOString().split('T')[0]  // Convert to YYYY-MM-DD
+          : '';
+
+        // Update formData with the product data
+        setFormData({
+          ...currentProduct,
+          Repairdate: formattedRepairDate,  // Set the formatted Repairdate
+        });
+      }
+    }
+  }, [currentEditedId, productList]);
 
   useEffect(() => {
     dispatch(fetchAllProducts());
