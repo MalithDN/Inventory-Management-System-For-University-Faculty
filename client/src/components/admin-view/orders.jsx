@@ -1,6 +1,7 @@
 import { Button } from "../ui/button";
 // import AdminProductTile from "@/components/admin-view/product-tile";
 import CommonForm from "@/components/common/form";
+import { format } from "date-fns"; // Import date-fns to format today's date
 
 // import { Dialog } from "../ui/dialog";
 import {
@@ -50,8 +51,8 @@ const initialFormData = {
 };
 
 function AdminOrdersView({}) {
-  const [openCreateProductsDialog, setOpenCreateProductsDialog] =
-    useState(false);
+  const today = format(new Date(), "yyyy-MM-dd");
+  const [openCreateProductsDialog, setOpenCreateProductsDialog] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
   // const [uploadedImageUrl, setUploadedImageUrl] = useState("");
@@ -72,8 +73,6 @@ function AdminOrdersView({}) {
             formData,
           })
         ).then((data) => {
-          console.log(data, "edit");
-
           if (data?.payload?.success) {
             dispatch(fetchAllProducts());
             setFormData(initialFormData);
@@ -103,68 +102,70 @@ function AdminOrdersView({}) {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
-  console.log(formData, "productList");
   return (
     <Card>
       <div>
-        {
-          <CardHeader>
-            <CardTitle>All Notifications</CardTitle>
-          </CardHeader>
-        }
-        <CardContent style={{overflowY: "auto"}}>
-        <div style={{ maxHeight: "calc(100vh - 215px)"}}>
-          <Table>
-            <TableHeader style={{fontSize: "1rem"}}>
-              <TableRow>
-                <TableHead style={{fontWeight: "bold" }}>Product ID</TableHead>
-                <TableHead style={{fontWeight: "bold" }}>Title</TableHead>
-                <TableHead style={{fontWeight: "bold" }}>Device</TableHead>
-                <TableHead style={{fontWeight: "bold" }}>Department</TableHead>
-                <TableHead style={{fontWeight: "bold" }}>Hall ID</TableHead>
-                <TableHead style={{fontWeight: "bold" }}>Repair Date</TableHead>
-                <TableHead style={{fontWeight: "bold" }}>Condition</TableHead>
-                <TableHead style={{fontWeight: "bold" }}>Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {productList && productList.length > 0
-                ? productList.map((productItem) => (
-                    <TableRow>
-                      <TableCell>{productItem.did}</TableCell>
-                      <TableCell>{productItem.title}</TableCell>
-                      <TableCell>{productItem.device}</TableCell>
-                      <TableCell>{productItem.department}</TableCell>
-                      <TableCell>{productItem.hallid}</TableCell>
-                      <TableCell style={{ color: "red" }}>
-                      <Badge className={`py-1 px-3 bg-red-500 `}>
-                        {productItem.Repairdate.split("T")[0]}
-                      </Badge>
-                      </TableCell>
-                      <TableCell>
-                      <Badge className={`py-1 px-3 ${productItem.condition === "Faulty" ? "bg-yellow-500" : 
-                                                    productItem.condition === "Working/Functional" ? "bg-green-500" : 
-                                                    productItem.condition === "Damaged" ? "bg-red-500" : 
-                                                    productItem.condition === "Under Maintenance" ? "bg-blue-500" : "bg-gray-500"}`}>
-                      {productItem.condition}
-                    </Badge> 
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          onClick={() => {
-                            setOpenCreateProductsDialog(true);
-                            setCurrentEditedId(productItem?._id);
-                            setFormData(productItem);
-                          }}
-                        >
-                          Edit
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                : null}
-            </TableBody>
-          </Table>
+        <CardHeader>
+          <CardTitle>All Notifications</CardTitle>
+        </CardHeader>
+        <CardContent style={{ overflowY: "auto" }}>
+          <div style={{ maxHeight: "calc(100vh - 215px)" }}>
+            <Table>
+              <TableHeader style={{ fontSize: "1rem" }}>
+                <TableRow>
+                  <TableHead style={{ fontWeight: "bold" }}>Product ID</TableHead>
+                  <TableHead style={{ fontWeight: "bold" }}>Title</TableHead>
+                  <TableHead style={{ fontWeight: "bold" }}>Device</TableHead>
+                  <TableHead style={{ fontWeight: "bold" }}>Department</TableHead>
+                  <TableHead style={{ fontWeight: "bold" }}>Hall ID</TableHead>
+                  <TableHead style={{ fontWeight: "bold" }}>Repair Date</TableHead>
+                  <TableHead style={{ fontWeight: "bold" }}>Condition</TableHead>
+                  <TableHead style={{ fontWeight: "bold" }}>Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {productList && productList.length > 0
+                  ? productList
+                      .filter((productItem) => {
+                        const productRepairDate = productItem.Repairdate.split("T")[0];
+                        return productRepairDate <= today; // Only include products where the repair date is today or earlier
+                      })
+                      .map((productItem) => (
+                        <TableRow key={productItem._id}>
+                          <TableCell>{productItem.did}</TableCell>
+                          <TableCell>{productItem.title}</TableCell>
+                          <TableCell>{productItem.device}</TableCell>
+                          <TableCell>{productItem.department}</TableCell>
+                          <TableCell>{productItem.hallid}</TableCell>
+                          <TableCell style={{ color: "red" }}>
+                            <Badge className={`py-1 px-3 bg-red-500 `}>
+                              {productItem.Repairdate.split("T")[0]}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge className={`py-1 px-3 ${productItem.condition === "Faulty" ? "bg-yellow-500" : 
+                                                            productItem.condition === "Working/Functional" ? "bg-green-500" : 
+                                                            productItem.condition === "Damaged" ? "bg-red-500" : 
+                                                            productItem.condition === "Under Maintenance" ? "bg-blue-500" : "bg-gray-500"}`}>
+                            {productItem.condition}
+                            </Badge> 
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              onClick={() => {
+                                setOpenCreateProductsDialog(true);
+                                setCurrentEditedId(productItem?._id);
+                                setFormData(productItem);
+                              }}
+                            >
+                              Edit
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                  : null}
+              </TableBody>
+            </Table>
           </div>
         </CardContent>
         <Sheet
