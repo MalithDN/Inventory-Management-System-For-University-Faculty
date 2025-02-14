@@ -1,0 +1,9 @@
+2025-02-14T07:46:13.384Z info: User logged out with email: yasithadmin@gmail.com
+2025-02-14T07:46:17.981Z info: User logged in successfully with email: yasithadmin@gmail.com
+2025-02-14T08:06:46.307Z info: Item Deleted - Product Title: new test, Product ID: 67aea849a8df810413496963, User: yasithadmin@gmail.com
+2025-02-14T08:07:45.224Z info: Item Added - Product Title: hello world, Product ID: 67aef9d19fbeda859248416d, Condition: Damaged, Department: ICT, Repair Date: Fri Feb 14 2025 05:30:00 GMT+0530 (India Standard Time), Hall ID: A 101, User: yasithadmin@gmail.com
+2025-02-14T08:09:05.895Z info: Item Edited - Product ID: 67aef9d19fbeda859248416d, Changes Made: {Title: old = "hello world", new = "malith awa"}, {Description: old = "11", new = "aye giya"}, {Device: old = "Printer", new = "Computer"}, {ID: old = "111", new = "123"}, {Hall Type: old = "Laboratory", new = "Lecture hall"}, {Hall ID: old = "A 101", new = "AG 03"}, {Condition: old = "Damaged", new = "Under Maintenance"}, User: yasithadmin@gmail.com
+2025-02-14T08:15:09.047Z info: User logged out with email: yasithadmin@gmail.com
+2025-02-14T08:15:24.381Z info: User logged in successfully with email: yasithadmin@gmail.com
+2025-02-14T08:17:23.417Z info: User logged out with email: yasithadmin@gmail.com
+2025-02-14T08:17:33.186Z info: User logged in successfully with email: yasithuser@gmail.com

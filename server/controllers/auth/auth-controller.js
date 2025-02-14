@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const logger = require("../../logger");  // Importing the logger
 
 //register
 // const registerUser = async (req, res) => {
@@ -133,6 +134,9 @@ const loginUser = async (req, res) => {
         department: checkUser.department
       },
     });
+
+    // Log the login event
+    logger.info(`User logged in successfully with email: ${email}`);
   } catch (e) {
     console.log(e);
     res.status(500).json({
@@ -145,6 +149,11 @@ const loginUser = async (req, res) => {
 //logout
 
 const logoutUser = (req, res) => {
+  const email = req.user.email;  // Email is set in authMiddleware
+  
+  // Log the logout event
+  logger.info(`User logged out with email: ${email}`);
+
   res.clearCookie("token").json({
     success: true,
     message: "Logged out successfully!",

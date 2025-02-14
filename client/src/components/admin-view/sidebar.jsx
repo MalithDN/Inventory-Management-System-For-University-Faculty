@@ -37,10 +37,10 @@ const adminSidebarMenuItems = [
     icon: <Users />,  
   },
   {
-    id: "systemlog",
-    label: "System Log",
-    path: "/admin/users",
-    icon: <ScrollText />,  
+      id: "systemlog",
+      label: "System Log",
+      path: "/admin/system-log",  // This should match the route in App.jsx
+      icon: <ScrollText />,
   },
 ];
 

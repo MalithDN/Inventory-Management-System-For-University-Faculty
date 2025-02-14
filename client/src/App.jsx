@@ -20,6 +20,8 @@ import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
 import SearchProducts from "./pages/shopping-view/search";
 import AdminUsers from "./pages/admin-view/users";
+import SystemLogPage from "./pages/admin-view/SystemLogPage";  // Correct import path
+
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -71,6 +73,8 @@ function App() {
           <Route path="orders" element={<AdminOrders />} />
           <Route path="features" element={<AdminFeatures />} />
           <Route path="users" element={< AdminUsers/>} />
+         {/* Add the new System Log page route */}
+         <Route path="system-log" element={<SystemLogPage />} />  // Ensure this is set up
         </Route>
         <Route
           path="/shop"

@@ -16,6 +16,9 @@ const shopReviewRouter = require("./routes/shop/review-routes");
 const commonFeatureRouter = require("./routes/common/feature-routes");
 const adminUserRouter = require("./routes/admin/user-routes");
 
+// Add fs and path modules
+const fs = require("fs");
+const path = require("path");
 //create a database connection -> u can also
 //create a separate file for this and then import/use that file here
 
@@ -57,5 +60,22 @@ app.use("/api/shop/review", shopReviewRouter);
 
 app.use("/api/common/feature", commonFeatureRouter);
 app.use("/api/admin/users", adminUserRouter);
+// New route to fetch system logs
+app.get("/api/system-logs", (req, res) => {
+  const logFilePath = path.join(__dirname, "logs", "system.log");  // Ensure this path matches the actual log file location
+
+  // Read the system log file
+  fs.readFile(logFilePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading log file:", err);
+      return res.status(500).json({ success: false, message: "Error reading log file" });
+    }
+
+    // Split the log data by new line and return as JSON
+    const logs = data.split("\n").map(log => log.trim()).filter(log => log !== "");
+    res.json({ success: true, logs });
+  });
+});
+
 
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
