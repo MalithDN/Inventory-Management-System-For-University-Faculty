@@ -7,3 +7,7 @@
 2025-02-14T08:15:24.381Z info: User logged in successfully with email: yasithadmin@gmail.com
 2025-02-14T08:17:23.417Z info: User logged out with email: yasithadmin@gmail.com
 2025-02-14T08:17:33.186Z info: User logged in successfully with email: yasithuser@gmail.com
+2025-02-14T08:35:58.223Z info: User logged in successfully with email: manuga@gmail.com
+2025-02-14T08:37:18.831Z info: Item Added - Product Title: Router, Product ID: 67af00be77ef1ac2cab4068f, Condition: Working/Functional, Department: IAT, Repair Date: Sat Feb 22 2025 05:30:00 GMT+0530 (India Standard Time), Hall ID: A 101, User: manuga@gmail.com
+2025-02-14T08:37:32.094Z info: Item Deleted - Product Title: Router, Product ID: 67af00be77ef1ac2cab4068f, User: manuga@gmail.com
+2025-02-14T08:38:16.947Z info: Item Edited - Product ID: 67aef9d19fbeda859248416d, Changes Made: {ID: old = "123", new = "12"}, {Condition: old = "Under Maintenance", new = "Working/Functional"}, User: manuga@gmail.com

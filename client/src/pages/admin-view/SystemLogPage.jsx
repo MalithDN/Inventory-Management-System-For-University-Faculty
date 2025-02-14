@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table";
+import { Badge } from "../../components/ui/badge"; // Assuming Badge component is available
+import { useToast } from "../../components/ui/use-toast"; // Assuming Toast component is available
 
 function SystemLogPage() {
   const [logs, setLogs] = useState([]);
   const [error, setError] = useState(null);
+  const { toast } = useToast();
 
   // Fetch system logs when the component mounts
   useEffect(() => {
@@ -29,94 +34,26 @@ function SystemLogPage() {
     fetchLogs();
   }, []); // Empty dependency array ensures this only runs once on component mount
 
-  // Styles for the table and page
-  const containerStyle = {
-    padding: '20px',
-  };
-
-  const headingStyle = {
-    textAlign: 'left',  // Aligns the text to the right
-    fontSize: '1.5rem',
-    marginBottom: '20px',
-    fontWeight: '500',
-  };
-
-  const tableStyle = {
-    width: '100%',
-    borderCollapse: 'collapse',
-    marginTop: '20px',
-  };
-
-  const headerStyle = {
-    backgroundColor: '#f9f9f9',
-    color: '#333',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    padding: '12px',
-    textAlign: 'left',
-    borderBottom: '2px solid #ddd',
-    whiteSpace: 'nowrap', // Prevent text wrapping in the header
-  };
-
-  const cellStyle = {
-    padding: '12px',
-    textAlign: 'left',
-    borderBottom: '1px solid #f0f0f0',
-    color: '#555',
-    wordWrap: 'break-word', // Allow long text to break into multiple lines
-  };
-
-  const timestampColumnStyle = {
-    ...cellStyle,
-    width: '20%',  // Set the width for the timestamp column
-  };
-
-  const actionColumnStyle = {
-    ...cellStyle,
-    width: '20%',  // Set the width for the action column
-  };
-
-  const detailsColumnStyle = {
-    ...cellStyle,
-    width: '60%',  // Expand the details column to fill the remaining space
-    whiteSpace: 'pre-wrap',  // Allow wrapping of the text in the details column
-  };
-
-  const rowHoverStyle = {
-    backgroundColor: '#fafafa',
-  };
-
-  const detailsContainerStyle = {
-    padding: '10px',
-    backgroundColor: '#f2f2f2',
-    margin: '5px 0',
-    borderRadius: '5px',
-    fontSize: '14px',
-    color: '#333',
-  };
-
-  const detailItemStyle = {
-    marginBottom: '8px',
-  };
-
   return (
-    <div style={containerStyle}>
-      <h1 style={headingStyle}>System Logs</h1>
-      <div className="log-container">
+    <Card>
+      <CardHeader>
+        <CardTitle>System Logs</CardTitle>
+      </CardHeader>
+      <CardContent>
         {error ? (
           <p style={{ color: 'red' }}>{error}</p> // Display error message if any
         ) : logs.length === 0 ? (
           <p>No logs available.</p>
         ) : (
-          <table style={tableStyle}>
-            <thead>
-              <tr>
-                <th style={headerStyle}>Timestamp</th>
-                <th style={headerStyle}>Action</th>
-                <th style={headerStyle}>Details</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead style={{ fontWeight: "bold" }}>Timestamp</TableHead>
+                <TableHead style={{ fontWeight: "bold" }}>Action</TableHead>
+                <TableHead style={{ fontWeight: "bold" }}>Details</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {logs.map((log, index) => {
                 let action = "";
                 let details = "";
@@ -141,9 +78,9 @@ function SystemLogPage() {
                   const productDetails = log.split("Changes Made: ")[1];
                   if (productDetails) {
                     details = (
-                      <div style={detailsContainerStyle}>
+                      <div style={{ padding: '10px', backgroundColor: '#f2f2f2', margin: '5px 0', borderRadius: '5px', fontSize: '14px', color: '#333' }}>
                         <strong>Edited Details:</strong>
-                        <div style={detailItemStyle}>{productDetails}</div>
+                        <div style={{ marginBottom: '8px' }}>{productDetails}</div>
                       </div>
                     );
                     userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Edit
@@ -156,23 +93,23 @@ function SystemLogPage() {
                 }
 
                 return (
-                  <tr key={index} style={index % 2 === 0 ? {} : rowHoverStyle}>
-                    <td style={timestampColumnStyle}>
+                  <TableRow key={index} style={index % 2 === 0 ? {} : { backgroundColor: '#fafafa' }}>
+                    <TableCell>
                       {new Date(log.split(" ")[0]).toLocaleString()}
-                    </td>
-                    <td style={actionColumnStyle}>{action}</td>
-                    <td style={detailsColumnStyle}>
+                    </TableCell>
+                    <TableCell>{action}</TableCell>
+                    <TableCell>
                       {details}
                       {action !== "Edit" && <div><strong>User:</strong> {userEmail}</div>} {/* Only display user for Add, Delete */}
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 );
               })}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 
