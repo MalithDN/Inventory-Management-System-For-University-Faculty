@@ -39,14 +39,15 @@ function SystemLogPage() {
       <CardHeader>
         <CardTitle>System Logs</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent style={{overflowY: "auto"}}>
+      <div style={{ maxHeight: "calc(100vh - 215px)"}}>
         {error ? (
           <p style={{ color: 'red' }}>{error}</p> // Display error message if any
         ) : logs.length === 0 ? (
           <p>No logs available.</p>
         ) : (
           <Table>
-            <TableHeader>
+            <TableHeader style={{fontSize: "1rem"}}>
               <TableRow>
                 <TableHead style={{ fontWeight: "bold" }}>Timestamp</TableHead>
                 <TableHead style={{ fontWeight: "bold" }}>Action</TableHead>
@@ -108,6 +109,7 @@ function SystemLogPage() {
             </TableBody>
           </Table>
         )}
+        </div>
       </CardContent>
     </Card>
   );
