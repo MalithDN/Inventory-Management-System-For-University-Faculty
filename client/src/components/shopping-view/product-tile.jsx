@@ -12,7 +12,7 @@ function ShoppingProductTile({
         <img
           src={product?.image || "/placeholder.jpg"}
           alt={product?.title}
-          className="w-full h-48 object-cover rounded-t-lg p-2"
+          className="w-full h-48 object-contain rounded-t-lg p-2"
         />
         </div>
         <CardContent className="p-4">

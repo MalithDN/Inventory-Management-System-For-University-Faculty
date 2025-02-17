@@ -29,7 +29,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             <img
               src={productDetails.image}
               alt={productDetails.title || "Product Image"}
-              className="w-full h-64 object-cover rounded-md mb-4"
+              className="w-full h-64 object-contain rounded-md mb-4"
             />
           )}
           
