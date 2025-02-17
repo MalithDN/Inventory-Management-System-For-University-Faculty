@@ -93,7 +93,7 @@ function HeaderRightContent() {
           <DropdownMenuSeparator />
           
           {/* Show Admin Panel only if user is an admin */}
-          {userRole === "admin" && (
+          {(userRole === "admin" || userRole === "main-admin")  && (
             <DropdownMenuItem
               onClick={() => navigate("/admin/dashboard")}
               className="cursor-pointer bg-purple-100 text-purple-700 transition-all duration-700 hover:text-white hover:bg-purple-700 hover:scale-105"

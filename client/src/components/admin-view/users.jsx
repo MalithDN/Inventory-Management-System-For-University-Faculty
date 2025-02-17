@@ -28,6 +28,13 @@ function AdminUsersView() {
   const { userList, userDetails } = useSelector((state) => state.adminUser);
   const dispatch = useDispatch();
   const { toast } = useToast();
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      setUserRole(user.role);
+    }}, [user]);
 
   useEffect(() => {
     dispatch(getAllUsersForAdmin());
@@ -90,19 +97,28 @@ function AdminUsersView() {
                 <TableCell>{user.userName}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <Badge className={`py-1 px-3 ${user.role === "admin" ? "bg-green-500" : "bg-blue-500"}`}>
+                  <Badge className={`py-1 px-3 ${user.role === "admin" ? "bg-green-500" : user.role === "main-admin" ? "bg-red-500" : "bg-blue-500"}`}>
+
                     {user.role}
                   </Badge>
                 </TableCell>
                 <TableCell style={{ textAlign: "center"}}>{user.department}</TableCell>
-                <TableCell style={{ textAlign: "center"}}>
-                  <Button onClick={() => handleFetchUserDetails(user._id)}>
-                    Edit Role
-                  </Button>
-                  <Button onClick={() => handleDeleteConfirmation(user._id)} style={{ marginLeft: "10px" }}>
-                    Delete
-                  </Button>
-                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                {(userRole === 'admin' && user.role === "user") || (userRole === 'main-admin' && user.role !== "main-admin")? (
+                  <>
+                    <Button onClick={() => handleFetchUserDetails(user._id)}>
+                      Edit Role
+                    </Button>
+                    <Button 
+                      onClick={() => handleDeleteConfirmation(user._id)} 
+                      style={{ marginLeft: "10px" }}
+                    >
+                      Delete
+                    </Button>
+                  </>
+                ) : null}
+              </TableCell>
+
               </TableRow>
             ))}
           </TableBody>
