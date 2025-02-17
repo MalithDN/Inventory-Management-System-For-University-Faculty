@@ -85,7 +85,7 @@ const addProduct = async (req, res) => {
     const userEmail = getLastLoggedInEmail();
 
     // Log the item addition action with the email
-    logger.info(`Item Added - Product Title: ${newlyCreatedProduct.title}, Product ID: ${newlyCreatedProduct._id}, Condition: ${newlyCreatedProduct.condition}, Department: ${newlyCreatedProduct.department}, Repair Date: ${newlyCreatedProduct.Repairdate}, Hall ID: ${newlyCreatedProduct.hallid}, User: ${userEmail}`);
+    logger.info(`Item Added - Product Title: ${newlyCreatedProduct.title}, Product ID: ${newlyCreatedProduct.did}, Condition: ${newlyCreatedProduct.condition}, Department: ${newlyCreatedProduct.department}, Repair Date: ${newlyCreatedProduct.Repairdate}, Hall ID: ${newlyCreatedProduct.hallid}, User: ${userEmail}`);
 
     res.status(201).json({
       success: true,
@@ -244,7 +244,7 @@ const deleteProduct = async (req, res) => {
     const userEmail = getLastLoggedInEmail();
 
     // Log the item delete action with product title and email
-    logger.info(`Item Deleted - Product Title: ${product.title}, Product ID: ${id}, User: ${userEmail}`);
+    logger.info(`Item Deleted - Product Title: ${product.title}, Product ID: ${product.did}, User: ${userEmail}`);
 
     res.status(200).json({
       success: true,
