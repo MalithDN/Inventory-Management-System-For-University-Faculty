@@ -21,7 +21,13 @@ function SystemLogPage() {
         const data = await response.json();
 
         if (data.success) {
-          setLogs(data.logs);  // Update state with fetched logs
+          // Sort the logs by timestamp in descending order
+          const sortedLogs = data.logs.sort((a, b) => {
+            const timestampA = new Date(a.split(" ")[0]);
+            const timestampB = new Date(b.split(" ")[0]);
+            return timestampB - timestampA; // Sort descending (newest first)
+          });
+          setLogs(sortedLogs);  // Update state with sorted logs
         } else {
           setError("Failed to fetch logs.");
         }
@@ -71,8 +77,14 @@ function SystemLogPage() {
                   let details = "";
                   let userEmail = "Unknown Email"; // Default to Unknown Email
 
+                  // Check for Item Edited (Product Edited logs)
+                  if (log.includes("Item Edited")) {
+                    action = "Item Edited";
+                    details = log.replace(/^\S+\s+\S+\s+\S+\s+/g, "").trim(); // Regex to remove timestamp
+                    userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Edit
+                  } 
                   // Check for User Role Update (Role Updated logs)
-                  if (log.includes("Role Updated")) {
+                  else if (log.includes("Role Updated")) {
                     action = "User Role Update";
                     details = log.replace(/^\S+\s+\S+\s+\S+\s+/g, "").trim(); // Regex to remove timestamp
                     userEmail = log.split("User Email: ")[1] || "Unknown Email"; // Extract email for Role Update
@@ -84,7 +96,7 @@ function SystemLogPage() {
                     details = log.replace(/^\S+\s+\S+\s+\S+\s+/g, "").trim(); // Regex to remove timestamp
                     userEmail = log.split("Action performed by: ")[1] || "Unknown Email"; // Extract action performed by email
                   } 
-                  // Check for other logs (Login, Logout, Item Added, Item Edited, Item Deleted)
+                  // Check for other logs (Login, Logout, Item Added, Item Deleted)
                   else if (log.includes("logged in")) {
                     action = "Login";
                     userEmail = log.split("email: ")[1] || "Unknown Email";
@@ -98,18 +110,6 @@ function SystemLogPage() {
                       const title = productDetails.split(",")[0]; // Extract only the title
                       details = title;
                       userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Add
-                    }
-                  } else if (log.includes("Item Edited")) {
-                    action = "Item Edited";
-                    const productDetails = log.split("Changes Made: ")[1];
-                    if (productDetails) {
-                      details = (
-                        <div style={{ padding: '10px', backgroundColor: '#f2f2f2', margin: '5px 0', borderRadius: '5px', fontSize: '14px', color: '#333' }}>
-                          <strong>Edited Details:</strong>
-                          <div style={{ marginBottom: '8px' }}>{productDetails}</div>
-                        </div>
-                      );
-                      userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Edit
                     }
                   } else if (log.includes("Item Deleted")) {
                     action = "Item Deleted";
@@ -126,9 +126,9 @@ function SystemLogPage() {
                       </TableCell>
                       <TableCell>{action}</TableCell>
                       <TableCell>
-                        {/* Display the raw log for "User Deleted" with timestamp removed */}
+                        {/* Display the raw log message */}
                         {details}
-                        {/* For Role Update and User Deleted, display the User's email only once */}
+                        {/* Display User Email only when necessary */}
                         {action !== "Item Edited" && action !== "User Role Update" && action !== "User Deleted" && <div><strong>User:</strong> {userEmail}</div>} 
                       </TableCell>
                     </TableRow>

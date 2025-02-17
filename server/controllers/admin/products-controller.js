@@ -141,39 +141,40 @@ const editProduct = async (req, res) => {
         success: false,
         message: "Inventory not found",
       });
-      const oldData = {
-        title: findProduct.title,
-        description: findProduct.description,
-        department: findProduct.department,
-        device: findProduct.device,
-        did: findProduct.did,
-        halltype: findProduct.halltype,
-        hallid: findProduct.hallid,
-        condition: findProduct.condition,
-        repairdate: findProduct.Repairdate,
-      };
-  
-      // Format Repairdate (just date without time and timezone)
-      const formattedOldRepairDate = oldData.repairdate
-        ? new Date(oldData.repairdate).toLocaleDateString()
-        : null;
-      const formattedNewRepairDate = Repairdate
-        ? new Date(Repairdate).toLocaleDateString()
-        : null;
-  
-      // Update the fields that are being edited
+      
+    const oldData = {
+      title: findProduct.title,
+      description: findProduct.description,
+      department: findProduct.department,
+      device: findProduct.device,
+      did: findProduct.did,
+      halltype: findProduct.halltype,
+      hallid: findProduct.hallid,
+      condition: findProduct.condition,
+      repairdate: findProduct.Repairdate,
+    };
+
+    // Format Repairdate (just date without time and timezone)
+    const formattedOldRepairDate = oldData.repairdate
+      ? new Date(oldData.repairdate).toLocaleDateString()
+      : null;
+    const formattedNewRepairDate = Repairdate
+      ? new Date(Repairdate).toLocaleDateString()
+      : null;
+
+    // Update the fields that are being edited
     findProduct.title = title || findProduct.title;
     findProduct.description = description || findProduct.description;
     findProduct.device = device || findProduct.device;
     findProduct.department = department || findProduct.department;
-    findProduct.did = did  || findProduct.did;
-    findProduct.hallid = hallid  || findProduct.hallid;
+    findProduct.did = did || findProduct.did;
+    findProduct.hallid = hallid || findProduct.hallid;
     findProduct.halltype = halltype || findProduct.halltype;
     findProduct.image = image || findProduct.image;
     findProduct.condition = condition || findProduct.condition;
     findProduct.Repairdate = Repairdate || findProduct.Repairdate;
 
-   // Save updated product
+    // Save updated product
     await findProduct.save();
 
     // Get the last logged-in email
@@ -211,12 +212,8 @@ const editProduct = async (req, res) => {
       changes.push(`{Repair Date: old = "${formattedOldRepairDate}", new = "${formattedNewRepairDate}"}`);
     }
 
-    // Log the changes in a single line in the desired format
-    if (changes.length > 0) {
-      logger.info(`Item Edited - Product ID: ${findProduct._id}, Changes Made: ${changes.join(", ")}, User: ${userEmail}`);
-    } else {
-      logger.info(`Item Edited - Product ID: ${findProduct._id}, No changes made, User: ${userEmail}`);
-    }
+    // Log the item edit action with the product title and ID
+    logger.info(`Item Edited - Product Title: ${findProduct.title}, Product ID: ${findProduct._id}, Changes Made: ${changes.join(", ")}, User: ${userEmail}`);
 
     res.status(200).json({
       success: true,
@@ -242,7 +239,8 @@ const deleteProduct = async (req, res) => {
         success: false,
         message: "Inventory not found",
       });
-// Get the last logged-in email
+
+    // Get the last logged-in email
     const userEmail = getLastLoggedInEmail();
 
     // Log the item delete action with product title and email
