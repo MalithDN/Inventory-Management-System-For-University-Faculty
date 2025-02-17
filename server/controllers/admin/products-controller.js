@@ -213,7 +213,7 @@ const editProduct = async (req, res) => {
     }
 
     // Log the item edit action with the product title and ID
-    logger.info(`Item Edited - Product Title: ${findProduct.title}, Product ID: ${findProduct._id}, Changes Made: ${changes.join(", ")}, User: ${userEmail}`);
+    logger.info(`Item Edited - Product Title: ${findProduct.title}, Product ID: ${findProduct.did}, Changes Made: ${changes.join(", ")}, User: ${userEmail}`);
 
     res.status(200).json({
       success: true,
