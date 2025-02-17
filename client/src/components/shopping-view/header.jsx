@@ -65,7 +65,7 @@ function HeaderRightContent() {
 
   return (
     <div className="flex flex-col gap-4 lg:items-center lg:flex-row">
-      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+      {/* <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
@@ -76,7 +76,7 @@ function HeaderRightContent() {
           <span className="sr-only">User Reports</span>
         </Button>
         <UserCartWrapper setOpenCartSheet={setOpenCartSheet} />
-      </Sheet>
+      </Sheet> */}
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

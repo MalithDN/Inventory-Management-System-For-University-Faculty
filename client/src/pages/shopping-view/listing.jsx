@@ -1,3 +1,4 @@
+import * as XLSX from "xlsx"; // Import xlsx
 import ProductFilter from "@/components/shopping-view/filter";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
@@ -14,9 +15,7 @@ import { sortOptions } from "@/config";
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
-  // fetchFilteredProducts
 } from "@/store/shop/products-slice";
-// import { fetchFilteredProducts } from "@/store/shop/products-slice";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,22 +27,16 @@ function createSearchParamsHelper(filterParams) {
   for (const [key, value] of Object.entries(filterParams)) {
     if (Array.isArray(value) && value.length > 0) {
       const paramValue = value.join(",");
-
       queryParams.push(`${key}=${encodeURIComponent(paramValue)}`);
     }
   }
-
-  console.log(queryParams, "queryParams");
 
   return queryParams.join("&");
 }
 
 function ShoppingListing() {
   const dispatch = useDispatch();
-  const { productList, productDetails } = useSelector(
-    (state) => state.shopProducts
-  );
-  useSelector((state) => state.shopCart);
+  const { productList, productDetails } = useSelector((state) => state.shopProducts);
   const { user } = useSelector((state) => state.auth);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
@@ -51,7 +44,6 @@ function ShoppingListing() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const { toast } = useToast();
 
-  // Extract the device filter from the URL
   const deviceSearchParam = searchParams.get("device");
 
   function handleSort(value) {
@@ -68,8 +60,7 @@ function ShoppingListing() {
         [getSectionId]: [getCurrentOption],
       };
     } else {
-      const indexOfCurrentOption =
-        cpyFilters[getSectionId].indexOf(getCurrentOption);
+      const indexOfCurrentOption = cpyFilters[getSectionId].indexOf(getCurrentOption);
 
       if (indexOfCurrentOption === -1)
         cpyFilters[getSectionId].push(getCurrentOption);
@@ -81,18 +72,15 @@ function ShoppingListing() {
   }
 
   function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
   useEffect(() => {
-    // Check if device filter is applied in the URL
     if (deviceSearchParam) {
-      // Split the device filter (e.g., "Computer,Server,Printer") into an array
       const devices = deviceSearchParam.split(",");
       setFilters((prevFilters) => ({
         ...prevFilters,
-        device: devices, // Update the filters state with the selected devices
+        device: devices,
       }));
     }
     setSort("price-lowtohigh");
@@ -108,16 +96,39 @@ function ShoppingListing() {
 
   useEffect(() => {
     if (filters !== null && sort !== null)
-      dispatch(
-        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
-      );
+      dispatch(fetchAllFilteredProducts({ filterParams: filters, sortParams: sort }));
   }, [dispatch, sort, filters]);
 
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
-  console.log(productList, "InventoryList");
+  // Export to Excel function
+  const exportToExcel = () => {
+    if (productList && productList.length > 0) {
+      const data = productList.map((product) => ({
+        DeviceID: product.did,
+        Title: product.title,
+        Description: product.description,
+        Department: product.department,
+        Device: product.device,
+        HallType: product.halltype,
+        HallID: product.hallid,
+        Condition: product.condition,
+        RepairDate: product.Repairdate.split("T")[0]
+      }));
+
+      // Create a new workbook and add a worksheet with the data
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Products");
+
+      // Write the workbook to a file and trigger the download
+      XLSX.writeFile(wb, "filtered_products.xlsx");
+    } else {
+      toast({ description: "No products available to export!" });
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
@@ -126,16 +137,10 @@ function ShoppingListing() {
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-extrabold">All Inventory</h2>
           <div className="flex items-center gap-3">
-            <span className="text-muted-foreground">
-              {productList?.length} Inventory
-            </span>
+            <span className="text-muted-foreground">{productList?.length} Inventory</span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-1"
-                >
+                <Button variant="outline" size="sm" className="flex items-center gap-1">
                   <ArrowUpDownIcon className="w-4 h-4" />
                   <span>Sort by</span>
                 </Button>
@@ -143,16 +148,17 @@ function ShoppingListing() {
               <DropdownMenuContent align="end" className="w-[200px]">
                 <DropdownMenuRadioGroup value={sort} onValueChange={handleSort}>
                   {sortOptions.map((sortItem) => (
-                    <DropdownMenuRadioItem
-                      value={sortItem.id}
-                      key={sortItem.id}
-                    >
+                    <DropdownMenuRadioItem value={sortItem.id} key={sortItem.id}>
                       {sortItem.label}
                     </DropdownMenuRadioItem>
                   ))}
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
+            {/* Export Button */}
+            <Button variant="outline" size="sm" onClick={exportToExcel}>
+              Export
+            </Button>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
