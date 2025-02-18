@@ -48,8 +48,10 @@ function AdminProducts() {
   function onSubmit(event) {
     event.preventDefault();
 
-    // Check if did is unique
-    const isDidUnique = !productList.some((product) => product.did === formData.did);
+    // Check if DID is unique only for new products or if changing it in edit mode
+    const isDidUnique = productList.every(
+      (product) => product.did !== formData.did || product._id === currentEditedId
+    );
 
     if (!isDidUnique) {
       toast({
