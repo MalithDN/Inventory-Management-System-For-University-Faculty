@@ -18,6 +18,7 @@ const searchProducts = async (req, res) => {
         { description: regEx },
         { category: regEx },
         { brand: regEx },
+        { device: regEx },
       ],
     };
 
