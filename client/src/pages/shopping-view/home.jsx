@@ -134,12 +134,12 @@ function ShoppingHome() {
       <section className="py-12 bg-gray-50">
   <div className="container px-4 mx-auto">
     <h2 className="mb-8 text-3xl font-bold text-center text-purple-700">Inventory Category</h2>
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 p-4">
+    <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-6">
       {categorysWithIcon.map((brandItem) => (
         <Card
           key={brandItem.label} // Add a unique key for each element
           onClick={() => handleNavigateToListingPage(brandItem, "device")}
-          className="group text-purple-700 transition-shadow cursor-pointer hover:shadow-xl transition-all duration-700 hover:scale-105 hover:bg-purple-700 hover:text-white"
+          className="text-purple-700 transition-all transition-shadow duration-700 cursor-pointer group hover:shadow-xl hover:scale-105 hover:bg-purple-700 hover:text-white"
         >
           <CardContent className="flex flex-col items-center justify-center p-6">
             <brandItem.icon
@@ -159,7 +159,7 @@ function ShoppingHome() {
     <h2 className="mb-8 text-3xl font-bold text-center text-purple-700">
       Inventory Information
     </h2>
-    <div className="h-96 overflow-y-auto p-4"> {/* Add height and overflow classes */}
+    <div className="p-4 overflow-y-auto h-96"> {/* Add height and overflow classes */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {productList && productList.length > 0
           ? productList.map((productItem) => (

@@ -7,13 +7,15 @@ const ProductSchema = new mongoose.Schema(
     description: String,
     department: String,
     device: String,
-    did: Number,
+    did: {
+      type: String,
+      required: true,
+      unique: true,  // Ensures the 'did' is unique in the database
+    },
     halltype: String,
-    hallid:String,
+    hallid: String,
     condition: String,
     Repairdate: Date,
-
-
   },
   { timestamps: true }
 );

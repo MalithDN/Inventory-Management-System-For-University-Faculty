@@ -11,3 +11,10 @@
 2025-02-14T08:37:18.831Z info: Item Added - Product Title: Router, Product ID: 67af00be77ef1ac2cab4068f, Condition: Working/Functional, Department: IAT, Repair Date: Sat Feb 22 2025 05:30:00 GMT+0530 (India Standard Time), Hall ID: A 101, User: manuga@gmail.com
 2025-02-14T08:37:32.094Z info: Item Deleted - Product Title: Router, Product ID: 67af00be77ef1ac2cab4068f, User: manuga@gmail.com
 2025-02-14T08:38:16.947Z info: Item Edited - Product ID: 67aef9d19fbeda859248416d, Changes Made: {ID: old = "123", new = "12"}, {Condition: old = "Under Maintenance", new = "Working/Functional"}, User: manuga@gmail.com
+2025-02-17T12:07:56.068Z info: User logged in successfully with email: abc@gmail.com
+2025-02-17T12:19:00.873Z info: Item Added - Product Title: Number one, Product ID: 67b32934a5d7c0da42accf88, Condition: Damaged, Department: IAT, Repair Date: Wed Feb 19 2025 05:30:00 GMT+0530 (India Standard Time), Hall ID: A 101, User: abc@gmail.com
+2025-02-17T12:19:07.777Z info: Item Deleted - Product Title: Number one, Product ID: 67b32934a5d7c0da42accf88, User: abc@gmail.com
+2025-02-17T12:34:47.758Z info: Item Edited - Product Title: Projector, Product ID: 453, Changes Made: {Title: old = "projector", new = "Projector"}, User: abc@gmail.com
+2025-02-17T13:48:34.601Z info: User logged in successfully with email: abc@gmail.com
+2025-02-17T14:23:58.342Z info: Item Added - Product Title: printers, Product ID: 67b3467ec7ce2077361c338b, Condition: Working/Functional, Department: ICT, Repair Date: Tue Feb 18 2025 05:30:00 GMT+0530 (India Standard Time), Hall ID: A 101, User: abc@gmail.com
+2025-02-17T14:24:26.949Z info: Item Edited - Product Title: printers, Product ID: 1234, Changes Made: {ID: old = "567", new = "1234"}, User: abc@gmail.com
