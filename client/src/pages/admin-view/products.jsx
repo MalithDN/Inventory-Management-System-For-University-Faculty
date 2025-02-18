@@ -48,7 +48,6 @@ function AdminProducts() {
   function onSubmit(event) {
     event.preventDefault();
 
-    // Check if DID is unique only for new products or if changing it in edit mode
     const isDidUnique = productList.every(
       (product) => product.did !== formData.did || product._id === currentEditedId
     );
@@ -56,7 +55,7 @@ function AdminProducts() {
     if (!isDidUnique) {
       toast({
         title: "Error",
-        description: "ID must be unique. Please enter a different value.",
+        description: "DID must be unique. Please enter a different value.",
         variant: "destructive",
       });
       return;
@@ -69,6 +68,7 @@ function AdminProducts() {
           setFormData(initialFormData);
           setOpenCreateProductsDialog(false);
           setCurrentEditedId(null);
+          toast({ title: "Edit inventory successfully" });
         }
       });
     } else {
