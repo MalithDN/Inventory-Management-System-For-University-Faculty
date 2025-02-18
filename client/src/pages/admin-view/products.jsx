@@ -68,7 +68,7 @@ function AdminProducts() {
           setFormData(initialFormData);
           setOpenCreateProductsDialog(false);
           setCurrentEditedId(null);
-          toast({ title: "Edit inventory successfully" });
+          toast({ title: "Inventory edit successfully" });
         }
       });
     } else {
@@ -88,6 +88,7 @@ function AdminProducts() {
     dispatch(deleteProduct(getCurrentProductId)).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchAllProducts());
+        toast({ title: "Inventory delete successfully" });
       }
     });
   }
