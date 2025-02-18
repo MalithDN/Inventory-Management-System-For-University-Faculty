@@ -18,3 +18,7 @@
 2025-02-17T13:48:34.601Z info: User logged in successfully with email: abc@gmail.com
 2025-02-17T14:23:58.342Z info: Item Added - Product Title: printers, Product ID: 67b3467ec7ce2077361c338b, Condition: Working/Functional, Department: ICT, Repair Date: Tue Feb 18 2025 05:30:00 GMT+0530 (India Standard Time), Hall ID: A 101, User: abc@gmail.com
 2025-02-17T14:24:26.949Z info: Item Edited - Product Title: printers, Product ID: 1234, Changes Made: {ID: old = "567", new = "1234"}, User: abc@gmail.com
+2025-02-18T07:01:08.954Z info: User logged in successfully with email: abc@gmail.com
+2025-02-18T07:02:13.028Z info: Item Added - Product Title: Dilhara, Product ID: 567, Condition: Working/Functional, Department: ICT, Repair Date: Thu Feb 20 2025 05:30:00 GMT+0530 (India Standard Time), Hall ID: A 101, User: abc@gmail.com
+2025-02-18T07:02:18.150Z info: Item Deleted - Product Title: Dilhara, Product ID: 567, User: abc@gmail.com
+2025-02-18T07:02:30.115Z info: Item Edited - Product Title: Desktop, Product ID: 272, Changes Made: {ID: old = "343", new = "272"}, User: abc@gmail.com
