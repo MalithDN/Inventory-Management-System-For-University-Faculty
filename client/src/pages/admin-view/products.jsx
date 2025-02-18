@@ -48,38 +48,38 @@ function AdminProducts() {
   function onSubmit(event) {
     event.preventDefault();
 
-    currentEditedId !== null
-      ? dispatch(
-          editProduct({
-            id: currentEditedId,
-            formData,
-          })
-        ).then((data) => {
-          console.log(data, "edit");
+    // Check if did is unique
+    const isDidUnique = !productList.some((product) => product.did === formData.did);
 
-          if (data?.payload?.success) {
-            dispatch(fetchAllProducts());
-            setFormData(initialFormData);
-            setOpenCreateProductsDialog(false);
-            setCurrentEditedId(null);
-          }
-        })
-      : dispatch(
-          addNewProduct({
-            ...formData,
-            image: uploadedImageUrl,
-          })
-        ).then((data) => {
-          if (data?.payload?.success) {
-            dispatch(fetchAllProducts());
-            setOpenCreateProductsDialog(false);
-            setImageFile(null);
-            setFormData(initialFormData);
-            toast({
-              title: "Inventory add successfully",
-            });
-          }
-        });
+    if (!isDidUnique) {
+      toast({
+        title: "Error",
+        description: "DID must be unique. Please enter a different value.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (currentEditedId !== null) {
+      dispatch(editProduct({ id: currentEditedId, formData })).then((data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchAllProducts());
+          setFormData(initialFormData);
+          setOpenCreateProductsDialog(false);
+          setCurrentEditedId(null);
+        }
+      });
+    } else {
+      dispatch(addNewProduct({ ...formData, image: uploadedImageUrl })).then((data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchAllProducts());
+          setOpenCreateProductsDialog(false);
+          setImageFile(null);
+          setFormData(initialFormData);
+          toast({ title: "Inventory added successfully" });
+        }
+      });
+    }
   }
 
   function handleDelete(getCurrentProductId) {
@@ -92,18 +92,15 @@ function AdminProducts() {
 
   useEffect(() => {
     if (currentEditedId !== null) {
-      // Find the current product being edited
       const currentProduct = productList.find(item => item._id === currentEditedId);
       if (currentProduct) {
-        // Format Repairdate to YYYY-MM-DD
         const formattedRepairDate = currentProduct.Repairdate
-          ? new Date(currentProduct.Repairdate).toISOString().split('T')[0]  // Convert to YYYY-MM-DD
+          ? new Date(currentProduct.Repairdate).toISOString().split('T')[0]
           : '';
 
-        // Update formData with the product data
         setFormData({
           ...currentProduct,
-          Repairdate: formattedRepairDate,  // Set the formatted Repairdate
+          Repairdate: formattedRepairDate,
         });
       }
     }
@@ -112,8 +109,6 @@ function AdminProducts() {
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
-
-  console.log(formData, "productList");
 
   return (
     <Fragment>
