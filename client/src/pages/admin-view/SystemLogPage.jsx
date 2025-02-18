@@ -77,45 +77,45 @@ function SystemLogPage() {
                   let details = "";
                   let userEmail = "Unknown Email"; // Default to Unknown Email
 
-                  // Check for Item Edited (Product Edited logs)
-                  if (log.includes("Item Edited")) {
+                  // Check for Item Deleted (Product Deleted logs)
+                  if (log.includes("Item Deleted")) {
+                    action = "Item Deleted";
+                    // Extract Product Title, Product ID, and User Email from the log
+                    const productTitle = log.split("Product Title: ")[1].split(",")[0];
+                    const productId = log.split("Product ID: ")[1].split(",")[0];
+                    userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Delete
+                    details = `Product Title: ${productTitle}, Product ID: ${productId}`; // Show Product Title and ID in details
+                  } 
+                  // Check for Item Added (Product Added logs)
+                  else if (log.includes("Item Added")) {
+                    action = "Item Added";
+                    const productTitle = log.split("Product Title: ")[1].split(",")[0];
+                    const productId = log.split("Product ID: ")[1].split(",")[0];
+                    userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Add
+                    details = `Product Title: ${productTitle}, Product ID: ${productId}`; // Show Product Title and ID in details
+                  } 
+                  // Check for other logs (Item Edited, User Role Update, User Deleted, Login, Logout)
+                  else if (log.includes("Item Edited")) {
                     action = "Item Edited";
                     details = log.replace(/^\S+\s+\S+\s+\S+\s+/g, "").trim(); // Regex to remove timestamp
                     userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Edit
                   } 
-                  // Check for User Role Update (Role Updated logs)
                   else if (log.includes("Role Updated")) {
                     action = "User Role Update";
                     details = log.replace(/^\S+\s+\S+\s+\S+\s+/g, "").trim(); // Regex to remove timestamp
                     userEmail = log.split("User Email: ")[1] || "Unknown Email"; // Extract email for Role Update
                   } 
-                  // Check for User Deletion (User Deleted logs)
                   else if (log.includes("User Deleted")) {
                     action = "User Deleted";
-                    // Remove timestamp from raw log for User Deleted
                     details = log.replace(/^\S+\s+\S+\s+\S+\s+/g, "").trim(); // Regex to remove timestamp
                     userEmail = log.split("Action performed by: ")[1] || "Unknown Email"; // Extract action performed by email
                   } 
-                  // Check for other logs (Login, Logout, Item Added, Item Deleted)
                   else if (log.includes("logged in")) {
                     action = "Login";
                     userEmail = log.split("email: ")[1] || "Unknown Email";
                   } else if (log.includes("logged out")) {
                     action = "Logout";
                     userEmail = log.split("email: ")[1] || "Unknown Email";
-                  } else if (log.includes("Item Added")) {
-                    action = "Item Added";
-                    const productDetails = log.split("Product Title: ")[1];
-                    if (productDetails) {
-                      const title = productDetails.split(",")[0]; // Extract only the title
-                      details = title;
-                      userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Add
-                    }
-                  } else if (log.includes("Item Deleted")) {
-                    action = "Item Deleted";
-                    const productDetails = log.split("Product Title: ")[1];
-                    details = productDetails ? productDetails.split(",")[0] : "No details available";
-                    userEmail = log.split("User: ")[1] || "Unknown Email"; // Extract email for Delete
                   }
 
                   return (
