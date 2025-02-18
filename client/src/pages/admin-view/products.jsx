@@ -54,7 +54,7 @@ function AdminProducts() {
     if (!isDidUnique) {
       toast({
         title: "Error",
-        description: "DID must be unique. Please enter a different value.",
+        description: "ID must be unique. Please enter a different value.",
         variant: "destructive",
       });
       return;

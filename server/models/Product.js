@@ -10,7 +10,7 @@ const ProductSchema = new mongoose.Schema(
     did: {
       type: String,
       required: true,
-      unique: true,  // Ensures the 'did' is unique in the database
+      unique: true,  // Ensures the 'id' is unique in the database
     },
     halltype: String,
     hallid: String,

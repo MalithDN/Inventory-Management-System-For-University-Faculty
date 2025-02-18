@@ -87,7 +87,7 @@ export const addProductFormElements = [
     label: "ID",
     name: "did",
     componentType: "input",
-    type: "number",
+    type: "text",
     placeholder: "Enter Device ID",
     required: true
   },
